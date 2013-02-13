@@ -1,6 +1,7 @@
 {
   "name": "labware",
-  "version": "0.0.0",
+  "version": "0.0.1",
+  "main": "./tubes/html/index.html",
   "dependencies": {
     "jquery": "~1.9.1",
     "d3": "~3.0.6"
