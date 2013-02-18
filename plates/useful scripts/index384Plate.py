@@ -42,7 +42,7 @@ for child in root:
 				print i.attrib['id']
 				
 # Write to file
-# tree.write("new384plate.svg")
+tree.write("new384plate.svg")
 				
 				
 				
