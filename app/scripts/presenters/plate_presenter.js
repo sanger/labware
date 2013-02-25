@@ -17,7 +17,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston MA  02110-1301 USA
 */
 
-define(['../views/plate_view', 'text!../plate96_2.json', 'text!../plate384_1.json'], function(view, plate96Json, plate384Json) {
+define(['../views/plate_view', 'text!../json_data/plate96_2.json', 'text!../json_data/plate384_1.json'], function(view, plate96Json, plate384Json) {
     'use strict';
     
     var platePresenter = function(owner) {
