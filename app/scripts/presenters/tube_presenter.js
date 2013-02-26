@@ -19,15 +19,32 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston MA  02110-1301 USA
 
 define(['../views/tube_view', 'text!../json_data/tube.json', 'text!../json_data/tube_empty.json'], function(view, tubeJson, tubeEmptyJson) {
     'use strict';
-    
-    var tubePresenter = function(owner) {
+
+    var tubePresenter = function (owner, presenterFactory) {
+        this.presenterFactory = presenterFactory;
         this.owner = owner;
-        this.Tubes = {};
         this.currentView = {};
-        
+
         return this;
     };
-    
+
+    /* Sets up the model to be used with the presenter
+     *
+     *
+     * Arguments
+     * ---------
+     * model:    The model for the presenter
+     *
+     *
+     * Returns
+     * -------
+     * this
+     */
+    tubePresenter.prototype.setupModel = function (model) {
+        this.model = model;
+        return this;
+    };
+
     /* Initialises the presenter and defines the view to be used
      *
      *
@@ -40,11 +57,9 @@ define(['../views/tube_view', 'text!../json_data/tube.json', 'text!../json_data/
      * -------
      * this
      */
-    tubePresenter.prototype.init = function(jquerySelection) {
-        'use strict';
-    
-        this.currentView = new view(this, jquerySelection);
-        
+    tubePresenter.prototype.setupView = function (jquerySelection) {
+        this.currentView = new View(this, jquerySelection);
+
         return this;
     };
 
@@ -61,106 +76,74 @@ define(['../views/tube_view', 'text!../json_data/tube.json', 'text!../json_data/
      * -------
      * this
      */
-    tubePresenter.prototype.drawSampleTubes = function(container1, container2) {
-        'use strict';
-    
+    tubePresenter.prototype.drawSampleTubes = function (container1, container2) {
         var tubeData = JSON.parse(tubeJson);
         var tubeEmptyData = JSON.parse(tubeEmptyJson);
-        
-        this.init(container1);
+
+        this.setupView(container1);
 
         // send the json data and container information to define the tube
-        this.update(tubeData);
-        
-        this.init(container2);
+        this.renderView(tubeData);
+
+        this.setupView(container2);
 
         // send the json data and container information to define the tube
-        this.update(tubeEmptyData);
+        this.renderView(tubeEmptyData);
 
         return this;
     };
-    
+
 
     /* Draws the test tube in the given container space
-    *
-    *
-    * Arguments
-    * ---------
-    * data:    tube data object
-    *
-    * 
-    * Returns
-    * -------
-    * this
-    */
-    tubePresenter.prototype.update = function(data) {
-        'use strict';
-    
+     *
+     *
+     * Arguments
+     * ---------
+     * data:    tube data object
+     *
+     * 
+     * Returns
+     * -------
+     * this
+     */
+    tubePresenter.prototype.renderView = function (data) {
         // Pass the update call down to the view
-        this.currentView.update(data);
-        
-        // Add to the collection of tubes (still needed?)
-        this.Tubes[data.tube.uuid] = data;
+        this.currentView.renderView(data);
 
         return this;
 
     };
-    
+
     /* Removes the image from the assigned view container
-    *
-    *
-    * Arguments
-    * ---------
-    * 
-    * 
-    * Returns
-    * -------
-    * this
-    */
-    tubePresenter.prototype.release = function() {
-        'use strict';
-    
+     *
+     *
+     * Arguments
+     * ---------
+     * 
+     * 
+     * Returns
+     * -------
+     * this
+     */
+    tubePresenter.prototype.release = function () {
         this.currentView.release();
-        
-        return this;    
+
+        return this;
     };
-    
+
     /* Placeholder for future functionality
-    *
-    *
-    * Arguments
-    * ---------
-    * 
-    * 
-    * Returns
-    * -------
-    * this
-    */
-    tubePresenter.prototype.childDone = function(childPtr, action, data) {
-         'use strict';
-    
-         return this;
-    };
-
-    /* Gets the HTML container given a string identifier
-    *
-    *
-    * Arguments
-    * ---------
-    * containerID:    The unique container ID string
-    *
-    * 
-    * Returns
-    * -------
-    * The container element
-    */
-    tubePresenter.prototype.getContainer = function(containerID) {
-        'use strict';
-    
-        // Selects the element to have the svg appended to it
-        var element = d3.select(containerID);
-
-        return element;
+     *
+     *
+     * Arguments
+     * ---------
+     * 
+     * 
+     * Returns
+     * -------
+     * this
+     */
+    tubePresenter.prototype.childDone = function (childPtr, action, data) {
+        return this;
     };
 
     return tubePresenter;

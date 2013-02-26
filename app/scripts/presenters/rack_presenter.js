@@ -19,11 +19,28 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston MA  02110-1301 USA
 define(['../views/rack_view', 'text!../json_data/tube_rack.json'], function (View, rackJson) {
     'use strict';
 
-    var rackPresenter = function (owner) {
+    var rackPresenter = function (owner, presenterFactory) {
+        this.presenterFactory = presenterFactory;
         this.owner = owner;
-        this.racks = {};
         this.currentView = {};
 
+        return this;
+    };
+
+    /* Sets up the model to be used with the presenter
+     *
+     *
+     * Arguments
+     * ---------
+     * model:    The model for the presenter
+     *
+     *
+     * Returns
+     * -------
+     * this
+     */
+    rackPresenter.prototype.setupModel = function (model) {
+        this.model = model;
         return this;
     };
 
@@ -39,7 +56,7 @@ define(['../views/rack_view', 'text!../json_data/tube_rack.json'], function (Vie
      * -------
      * this
      */
-    rackPresenter.prototype.init = function (jquerySelection) {
+    rackPresenter.prototype.setupView = function (jquerySelection) {
         this.currentView = new View(this, jquerySelection);
 
         return this;
@@ -61,10 +78,10 @@ define(['../views/rack_view', 'text!../json_data/tube_rack.json'], function (Vie
     rackPresenter.prototype.drawSampleRack = function (container) {
         var rackData = JSON.parse(rackJson);
 
-        this.init(container);
+        this.setupView(container);
 
         // send the json data and container information to define the spin column
-        this.update(rackData);
+        this.renderView(rackData);
 
         return this;
     };
@@ -82,12 +99,9 @@ define(['../views/rack_view', 'text!../json_data/tube_rack.json'], function (Vie
      * -------
      * this
      */
-    rackPresenter.prototype.update = function (data) {
+    rackPresenter.prototype.renderView = function (data) {
         // Pass the update call down to the view
-        this.currentView.update(data);
-
-        // Add to the collection of spin columns (still needed?)
-        this.racks[data.tube_rack.uuid] = data;
+        this.currentView.renderView(data);
 
         return this;
 
@@ -123,25 +137,6 @@ define(['../views/rack_view', 'text!../json_data/tube_rack.json'], function (Vie
      */
     rackPresenter.prototype.childDone = function (childPtr, action, data) {
         return this;
-    };
-
-    /* Gets the HTML container given a string identifier
-     *
-     *
-     * Arguments
-     * ---------
-     * containerID:    The unique container ID string
-     *
-     * 
-     * Returns
-     * -------
-     * The container element
-     */
-    rackPresenter.prototype.getContainer = function (containerID) {
-        // Selects the element to have the svg appended to it
-        var element = d3.select(containerID);
-
-        return element;
     };
 
     return rackPresenter;

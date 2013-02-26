@@ -67,7 +67,7 @@ define(['text!../../images/rack.svg'], function (rackSvg) {
      * -------
      * The spin column uuid
      */
-    rackView.prototype.update = function (data) {
+    rackView.prototype.renderView = function (data) {
         // Store the spin column data from the json object in a hash with the uuid as a unique identifier
         var newRack = data.tube_rack;
 
