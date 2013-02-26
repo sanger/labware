@@ -5,7 +5,11 @@ define(['presenters/tube_presenter', 'presenters/plate_presenter', 'presenters/r
       describe("default constructor", function(){
          it('instantiates tubes object', function(){
            var presenter = new TubePresenter();
-           expect(presenter.Tubes).toBeDefined();
+           expect(presenter).toBeDefined();
+          });
+          it('is of type tube', function(){
+              var presenter = new TubePresenter();
+              expect(presenter instanceof TubePresenter).toBeTruthy();
           });
       });
   });
@@ -14,7 +18,7 @@ define(['presenters/tube_presenter', 'presenters/plate_presenter', 'presenters/r
     describe("default constructor", function(){
       it('instantiates plate object', function(){
         var plate96 = new Plate96Presenter();
-        expect(plate96.plates).toBeDefined();
+        expect(plate96).toBeDefined();
       });
     });
   });

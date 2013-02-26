@@ -19,15 +19,32 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston MA  02110-1301 USA
 
 define(['../views/spin_column_view', 'text!../json_data/spin_column.json'], function(view, spinColumnJson) {
     'use strict';
-    
-    var spinColumnPresenter = function(owner) {
+
+    var spinColumnPresenter = function (owner, presenterFactory) {
+        this.presenterFactory = presenterFactory;
         this.owner = owner;
-        this.spinColumns = {};
         this.currentView = {};
-        
+
         return this;
     };
-    
+
+    /* Sets up the model to be used with the presenter
+     *
+     *
+     * Arguments
+     * ---------
+     * model:    The model for the presenter
+     *
+     *
+     * Returns
+     * -------
+     * this
+     */
+    spinColumnPresenter.prototype.setupModel = function (model) {
+        this.model = model;
+        return this;
+    };
+
     /* Initialises the presenter and defines the view to be used
      *
      *
@@ -40,13 +57,11 @@ define(['../views/spin_column_view', 'text!../json_data/spin_column.json'], func
      * -------
      * this
      */
-    spinColumnPresenter.prototype.init = function(jquerySelection) {
-        'use strict';
-    
-        this.currentView = new view(this, jquerySelection);
-        
+    spinColumnPresenter.prototype.setupView = function (jquerySelection) {
+        this.currentView = new View(this, jquerySelection);
+
         return this;
-    }
+    };
 
     /* Sample method to show creation of spin column image with json dummy data
      * The section ID is currently set to spincolumn
@@ -61,100 +76,68 @@ define(['../views/spin_column_view', 'text!../json_data/spin_column.json'], func
      * -------
      * this
      */
-    spinColumnPresenter.prototype.drawSampleSpinColumn = function(container) {
-        'use strict';
-    
+    spinColumnPresenter.prototype.drawSampleSpinColumn = function (container) {
         var spinColumnData = JSON.parse(spinColumnJson);
-        
-        this.init(container);
+
+        this.setupView(container);
 
         // send the json data and container information to define the spin column
-        this.update(spinColumnData);
+        this.renderView(spinColumnData);
 
         return this;
     };
-    
+
 
     /* Draws the spin column in the given container space
-    *
-    *
-    * Arguments
-    * ---------
-    * data:    spin column data object
-    *
-    * 
-    * Returns
-    * -------
-    * this
-    */
-    spinColumnPresenter.prototype.update = function(data) {
-        'use strict';
-    
+     *
+     *
+     * Arguments
+     * ---------
+     * data:    spin column data object
+     *
+     * 
+     * Returns
+     * -------
+     * this
+     */
+    spinColumnPresenter.prototype.renderView = function (data) {
         // Pass the update call down to the view
-        this.currentView.update(data);
-        
-        // Add to the collection of spin columns (still needed?)
-        this.spinColumns[data.spin_columns.uuid] = data;
+        this.currentView.renderView(data);
 
         return this;
 
     };
-    
+
     /* Removes the image from the assigned view container
-    *
-    *
-    * Arguments
-    * ---------
-    * 
-    * 
-    * Returns
-    * -------
-    * this
-    */
-    spinColumnPresenter.prototype.release = function() {
-        'use strict';
-    
+     *
+     *
+     * Arguments
+     * ---------
+     * 
+     * 
+     * Returns
+     * -------
+     * this
+     */
+    spinColumnPresenter.prototype.release = function () {
         this.currentView.release();
-        
-        return this;    
+
+        return this;
     };
-    
+
     /* Placeholder for future functionality
-    *
-    *
-    * Arguments
-    * ---------
-    * 
-    * 
-    * Returns
-    * -------
-    * this
-    */
-    spinColumnPresenter.prototype.childDone = function(childPtr, action, data) {
-         'use strict';
-    
-         return this;
-    };
-
-    /* Gets the HTML container given a string identifier
-    *
-    *
-    * Arguments
-    * ---------
-    * containerID:    The unique container ID string
-    *
-    * 
-    * Returns
-    * -------
-    * The container element
-    */
-    spinColumnPresenter.prototype.getContainer = function(containerID) {
-        'use strict';
-    
-        // Selects the element to have the svg appended to it
-        var element = d3.select(containerID);
-
-        return element;
+     *
+     *
+     * Arguments
+     * ---------
+     * 
+     * 
+     * Returns
+     * -------
+     * this
+     */
+    spinColumnPresenter.prototype.childDone = function (childPtr, action, data) {
+        return this;
     };
 
     return spinColumnPresenter;
