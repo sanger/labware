@@ -19,7 +19,7 @@ require.config({
 
 });
 
-require(['domReady!', 'spec/example'], function() {
+require(['domReady!', 'spec/tube_presenter_spec', 'spec/plate_presenter_spec', 'spec/spin_column_presenter_spec'], function() {
   runJasmineTests();
   //window.setTimeout(runJasmineTests, 1000);
 });
