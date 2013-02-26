@@ -1,7 +1,7 @@
-define(['tubes/scripts/presenters/tube_presenter', 'plates/scripts/presenters/plate_presenter'], function(TubePresenter, Plate96Presenter) {
+define(['presenters/tube_presenter', 'presenters/plate_presenter', 'presenters/rack_presenter', 'presenters/spin_column_presenter'], function(TubePresenter, Plate96Presenter, RackPresenter, SpinColumnPresenter) {
   'use strict';
 
-   describe("tubePresenter", function() {
+   describe("TubePresenter", function() {
       describe("default constructor", function(){
          it('instantiates tubes object', function(){
            var presenter = new TubePresenter();
@@ -18,5 +18,25 @@ define(['tubes/scripts/presenters/tube_presenter', 'plates/scripts/presenters/pl
       });
     });
   });
+
+  describe("RackPresenter", function(){
+    describe("default constructor", function(){
+      it('instantiates rack object', function(){
+        var rack = new RackPresenter();
+        expect(rack).toBeDefined();
+      });
+    });
+  });
+
+  describe("SpinColumnPresenter", function(){
+    describe("default constructor", function(){
+      it('instantiates spin column object', function(){
+        var SpinColumn = new SpinColumnPresenter();
+        expect(SpinColumn).toBeDefined();
+      });
+    });
+  });
+
+
 });
 

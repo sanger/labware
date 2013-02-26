@@ -17,12 +17,12 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston MA  02110-1301 USA
 */
 
-define(['../views/plate_view', 'text!../plate96_2.json', 'text!../plate384_1.json'], function(view, plate96Json, plate384Json) {
+define(['../views/spin_column_view', 'text!../json_data/spin_column.json'], function(view, spinColumnJson) {
     'use strict';
     
-    var platePresenter = function(owner) {
+    var spinColumnPresenter = function(owner) {
         this.owner = owner;
-        this.plates = {};
+        this.spinColumns = {};
         this.currentView = {};
         
         return this;
@@ -40,13 +40,13 @@ define(['../views/plate_view', 'text!../plate96_2.json', 'text!../plate384_1.jso
      * -------
      * this
      */
-    platePresenter.prototype.init = function(jquerySelection) {
+    spinColumnPresenter.prototype.init = function(jquerySelection) {
         'use strict';
     
         this.currentView = new view(this, jquerySelection);
         
         return this;
-    };
+    }
 
     /* Sample method to show creation of spin column image with json dummy data
      * The section ID is currently set to spincolumn
@@ -61,21 +61,15 @@ define(['../views/plate_view', 'text!../plate96_2.json', 'text!../plate384_1.jso
      * -------
      * this
      */
-    platePresenter.prototype.drawSamplePlate = function(container1, container2) {
+    spinColumnPresenter.prototype.drawSampleSpinColumn = function(container) {
         'use strict';
     
-        var plate96Data = JSON.parse(plate96Json);
-        var plate384Data = JSON.parse(plate384Json);
+        var spinColumnData = JSON.parse(spinColumnJson);
         
-        this.init(container1);
+        this.init(container);
 
         // send the json data and container information to define the spin column
-        this.update(plate96Data);
-        
-        this.init(container2);
-
-        // send the json data and container information to define the spin column
-        this.update(plate384Data);
+        this.update(spinColumnData);
 
         return this;
     };
@@ -93,14 +87,14 @@ define(['../views/plate_view', 'text!../plate96_2.json', 'text!../plate384_1.jso
     * -------
     * this
     */
-    platePresenter.prototype.update = function(data) {
+    spinColumnPresenter.prototype.update = function(data) {
         'use strict';
     
         // Pass the update call down to the view
         this.currentView.update(data);
         
         // Add to the collection of spin columns (still needed?)
-        this.plates[data.plate] = data;
+        this.spinColumns[data.spin_columns.uuid] = data;
 
         return this;
 
@@ -117,7 +111,7 @@ define(['../views/plate_view', 'text!../plate96_2.json', 'text!../plate384_1.jso
     * -------
     * this
     */
-    platePresenter.prototype.release = function() {
+    spinColumnPresenter.prototype.release = function() {
         'use strict';
     
         this.currentView.release();
@@ -136,7 +130,7 @@ define(['../views/plate_view', 'text!../plate96_2.json', 'text!../plate384_1.jso
     * -------
     * this
     */
-    platePresenter.prototype.childDone = function(childPtr, action, data) {
+    spinColumnPresenter.prototype.childDone = function(childPtr, action, data) {
          'use strict';
     
          return this;
@@ -154,7 +148,7 @@ define(['../views/plate_view', 'text!../plate96_2.json', 'text!../plate384_1.jso
     * -------
     * The container element
     */
-    platePresenter.prototype.getContainer = function(containerID) {
+    spinColumnPresenter.prototype.getContainer = function(containerID) {
         'use strict';
     
         // Selects the element to have the svg appended to it
@@ -163,5 +157,5 @@ define(['../views/plate_view', 'text!../plate96_2.json', 'text!../plate384_1.jso
         return element;
     };
 
-    return platePresenter;
+    return spinColumnPresenter;
 });
