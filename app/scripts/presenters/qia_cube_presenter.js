@@ -16,18 +16,23 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston MA  02110-1301 USA
 */
-
-define(['../views/qia_cube_view'], function(view) {
+define(['../views/qia_cube_view'], function (View) {
     'use strict';
-    
-    var qiaCubePresenter = function(owner) {
+
+    var qiaCubePresenter = function (owner, presenterFactory) {
+        this.presenterFactory = presenterFactory;
         this.owner = owner;
         this.currentView = {};
         window.qiaPresenter = this;
-        
+
         return this;
     };
-    
+
+    qiaCubePresenter.prototype.setupModel = function (model) {
+        this.model = model;
+        return this;
+    };
+
     /* Initialises the presenter and defines the view to be used
      *
      *
@@ -40,130 +45,100 @@ define(['../views/qia_cube_view'], function(view) {
      * -------
      * this
      */
-    qiaCubePresenter.prototype.init = function(jquerySelection) {
-        'use strict';
-    
-        this.currentView = new view(this, jquerySelection);
-        
+    qiaCubePresenter.prototype.setupView = function (jquerySelection) {
+        this.currentView = new View(this, jquerySelection);
+
         return this;
     };
-    
+
 
     /* Draws the spin column in the given container space
-    *
-    *
-    * Arguments
-    * ---------
-    * data:    spin column data object
-    *
-    * 
-    * Returns
-    * -------
-    * this
-    */
-    qiaCubePresenter.prototype.update = function() {
-        'use strict';
-    
+     *
+     *
+     * Arguments
+     * ---------
+     * data:    spin column data object
+     *
+     * 
+     * Returns
+     * -------
+     * this
+     */
+    qiaCubePresenter.prototype.renderView = function () {
         // Pass the update call down to the view
-        this.currentView.update();
+        this.currentView.renderView();
 
         return this;
     };
-    
+
     /* Removes the image from the assigned view container
-    *
-    *
-    * Arguments
-    * ---------
-    * 
-    * 
-    * Returns
-    * -------
-    * this
-    */
-    qiaCubePresenter.prototype.release = function() {
-        'use strict';
-    
+     *
+     *
+     * Arguments
+     * ---------
+     * 
+     * 
+     * Returns
+     * -------
+     * this
+     */
+    qiaCubePresenter.prototype.release = function () {
         this.currentView.release();
-        
-        return this;    
-    };
-    
-    /* Placeholder for future functionality
-    *
-    *
-    * Arguments
-    * ---------
-    * 
-    * 
-    * Returns
-    * -------
-    * this
-    */
-    qiaCubePresenter.prototype.childDone = function(childPtr, action, data) {
-         'use strict';
-    
-         return this;
-    };
 
-    /* Gets the HTML container given a string identifier
-    *
-    *
-    * Arguments
-    * ---------
-    * containerID:    The unique container ID string
-    *
-    * 
-    * Returns
-    * -------
-    * The container element
-    */
-    qiaCubePresenter.prototype.getContainer = function(containerID) {
-        'use strict';
-    
-        // Selects the element to have the svg appended to it
-        var element = d3.select(containerID);
-
-        return element;
-    };
-    
-    /* Passes down to the view the call to initialise a select
-    *  associated with the QiaCube
-    *
-    *
-    * Arguments
-    * ---------
-    * listContainer:    The jQuery selection of the select object
-    *
-    * 
-    * Returns
-    * -------
-    * this
-    */
-    qiaCubePresenter.prototype.initTubesList = function(listContainer) {
-        this.currentView.initTubesList(listContainer);
-        
         return this;
     };
-    
+
+    /* Placeholder for future functionality
+     *
+     *
+     * Arguments
+     * ---------
+     * 
+     * 
+     * Returns
+     * -------
+     * this
+     */
+    qiaCubePresenter.prototype.childDone = function (childPtr, action, data) {
+        return this;
+    };
+
+    /* Passes down to the view the call to initialise a select
+     *  associated with the QiaCube
+     *
+     *
+     * Arguments
+     * ---------
+     * listContainer:    The jQuery selection of the select object
+     *
+     * 
+     * Returns
+     * -------
+     * this
+     */
+    qiaCubePresenter.prototype.initTubesList = function (listContainer) {
+        this.currentView.initTubesList(listContainer);
+
+        return this;
+    };
+
     /* Determines which tubes are displayed given the number to display
-    *
-    *
-    * Arguments
-    * ---------
-    * tubesString:    The number of tubes to display in string format
-    *
-    * 
-    * Returns
-    * -------
-    * this
-    */
-    qiaCubePresenter.prototype.displayTubes = function(tubesString) {
-        
-        var numTubes = parseInt(tubesString);
-        
-        switch (numTubes)
-        {
+     *
+     *
+     * Arguments
+     * ---------
+     * tubesString:    The number of tubes to display in string format
+     *
+     * 
+     * Returns
+     * -------
+     * this
+     */
+    qiaCubePresenter.prototype.displayTubes = function (tubesString) {
+
+        var numTubes = parseInt(tubesString, 10);
+
+        switch (numTubes) {
             case 0:
                 this.currentView.setTubes([]);
                 break;
@@ -197,9 +172,9 @@ define(['../views/qia_cube_view'], function(view) {
             case 12:
                 this.currentView.setTubes([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]);
                 break;
-            
+
         }
-        
+
         return this;
     };
 

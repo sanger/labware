@@ -40,7 +40,7 @@ define(['text!../../images/centrifuge.svg'], function (centrifugeSvg) {
      * -------
      * The spin column uuid
      */
-    centrifugeView.prototype.update = function () {
+    centrifugeView.prototype.renderView = function () {
 
         // Parse the SVG xml data for the spin column image
         var parser = new DOMParser();
