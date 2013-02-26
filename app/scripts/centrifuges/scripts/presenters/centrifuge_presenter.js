@@ -19,11 +19,17 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston MA  02110-1301 USA
 define(['../views/centrifuge_view'], function (View) {
     'use strict';
 
-    var centrifugePresenter = function (owner) {
+    var centrifugePresenter = function (owner, presenterFactory) {
+        this.presenterFactory = presenterFactory;
         this.owner = owner;
         this.currentView = {};
         window.centrifugePresenter = this;
 
+        return this;
+    };
+
+    centrifugePresenter.prototype.setupModel = function (model) {
+        this.model = model;
         return this;
     };
 
@@ -39,7 +45,7 @@ define(['../views/centrifuge_view'], function (View) {
      * -------
      * this
      */
-    centrifugePresenter.prototype.init = function (jquerySelection) {
+    centrifugePresenter.prototype.setupView = function (jquerySelection) {
 
         this.currentView = new View(this, jquerySelection);
 
@@ -59,10 +65,10 @@ define(['../views/centrifuge_view'], function (View) {
      * -------
      * this
      */
-    centrifugePresenter.prototype.update = function () {
+    centrifugePresenter.prototype.renderView = function () {
 
         // Pass the update call down to the view
-        this.currentView.update();
+        this.currentView.renderView();
 
         return this;
     };
@@ -99,26 +105,6 @@ define(['../views/centrifuge_view'], function (View) {
     centrifugePresenter.prototype.childDone = function (childPtr, action, data) {
 
         return this;
-    };
-
-    /* Gets the HTML container given a string identifier
-     *
-     *
-     * Arguments
-     * ---------
-     * containerID:    The unique container ID string
-     *
-     * 
-     * Returns
-     * -------
-     * The container element
-     */
-    centrifugePresenter.prototype.getContainer = function (containerID) {
-
-        // Selects the element to have the svg appended to it
-        var element = d3.select(containerID);
-
-        return element;
     };
 
     /* Passes down to the view the call to initialise a select

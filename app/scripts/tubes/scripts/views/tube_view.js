@@ -39,7 +39,7 @@ define(['text!../../images/tube_final4.svg'], function (tubeSvg) {
      * -------
      * The tube uuid
      */
-    tubeView.prototype.update = function (data) {
+    tubeView.prototype.renderView = function (data) {
         var volumeText = "-";
         var barcodeText = "N/A";
         var typeText = "-";

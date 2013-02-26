@@ -16,18 +16,34 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston MA  02110-1301 USA
 */
-
-define(['../views/plate_view', 'text!../plate96_2.json', 'text!../plate384_1.json'], function(view, plate96Json, plate384Json) {
+define(['../views/plate_view', 'text!../plate96_2.json', 'text!../plate384_1.json'], function (View, plate96Json, plate384Json) {
     'use strict';
-    
-    var platePresenter = function(owner) {
+
+    var platePresenter = function (owner, presenterFactory) {
+        this.presenterFactory = presenterFactory;
         this.owner = owner;
-        this.plates = {};
         this.currentView = {};
-        
+
         return this;
     };
-    
+
+    /* Sets up the model to be used with the presenter
+     *
+     *
+     * Arguments
+     * ---------
+     * model:    The model for the presenter
+     *
+     *
+     * Returns
+     * -------
+     * this
+     */
+    platePresenter.prototype.setupModel = function (model) {
+        this.model = model;
+        return this;
+    };
+
     /* Initialises the presenter and defines the view to be used
      *
      *
@@ -40,11 +56,9 @@ define(['../views/plate_view', 'text!../plate96_2.json', 'text!../plate384_1.jso
      * -------
      * this
      */
-    platePresenter.prototype.init = function(jquerySelection) {
-        'use strict';
-    
-        this.currentView = new view(this, jquerySelection);
-        
+    platePresenter.prototype.setupView = function (jquerySelection) {
+        this.currentView = new View(this, jquerySelection);
+
         return this;
     };
 
@@ -61,106 +75,74 @@ define(['../views/plate_view', 'text!../plate96_2.json', 'text!../plate384_1.jso
      * -------
      * this
      */
-    platePresenter.prototype.drawSamplePlate = function(container1, container2) {
-        'use strict';
-    
+    platePresenter.prototype.drawSamplePlate = function (container1, container2) {
         var plate96Data = JSON.parse(plate96Json);
         var plate384Data = JSON.parse(plate384Json);
-        
-        this.init(container1);
+
+        this.setupView(container1);
 
         // send the json data and container information to define the spin column
-        this.update(plate96Data);
-        
-        this.init(container2);
+        this.renderView(plate96Data);
+
+        this.setupView(container2);
 
         // send the json data and container information to define the spin column
-        this.update(plate384Data);
+        this.renderView(plate384Data);
 
         return this;
     };
-    
+
 
     /* Draws the spin column in the given container space
-    *
-    *
-    * Arguments
-    * ---------
-    * data:    spin column data object
-    *
-    * 
-    * Returns
-    * -------
-    * this
-    */
-    platePresenter.prototype.update = function(data) {
-        'use strict';
-    
+     *
+     *
+     * Arguments
+     * ---------
+     * data:    spin column data object
+     *
+     * 
+     * Returns
+     * -------
+     * this
+     */
+    platePresenter.prototype.renderView = function (data) {
         // Pass the update call down to the view
-        this.currentView.update(data);
-        
-        // Add to the collection of spin columns (still needed?)
-        this.plates[data.plate] = data;
+        this.currentView.renderView(data);
 
         return this;
 
     };
-    
+
     /* Removes the image from the assigned view container
-    *
-    *
-    * Arguments
-    * ---------
-    * 
-    * 
-    * Returns
-    * -------
-    * this
-    */
-    platePresenter.prototype.release = function() {
-        'use strict';
-    
+     *
+     *
+     * Arguments
+     * ---------
+     * 
+     * 
+     * Returns
+     * -------
+     * this
+     */
+    platePresenter.prototype.release = function () {
         this.currentView.release();
-        
-        return this;    
+
+        return this;
     };
-    
+
     /* Placeholder for future functionality
-    *
-    *
-    * Arguments
-    * ---------
-    * 
-    * 
-    * Returns
-    * -------
-    * this
-    */
-    platePresenter.prototype.childDone = function(childPtr, action, data) {
-         'use strict';
-    
-         return this;
-    };
-
-    /* Gets the HTML container given a string identifier
-    *
-    *
-    * Arguments
-    * ---------
-    * containerID:    The unique container ID string
-    *
-    * 
-    * Returns
-    * -------
-    * The container element
-    */
-    platePresenter.prototype.getContainer = function(containerID) {
-        'use strict';
-    
-        // Selects the element to have the svg appended to it
-        var element = d3.select(containerID);
-
-        return element;
+     *
+     *
+     * Arguments
+     * ---------
+     * 
+     * 
+     * Returns
+     * -------
+     * this
+     */
+    platePresenter.prototype.childDone = function (childPtr, action, data) {
+        return this;
     };
 
     return platePresenter;
