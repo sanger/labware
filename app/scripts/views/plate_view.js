@@ -16,7 +16,7 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston MA  02110-1301 USA
 */
-define(['text!../../images/96_plate.svg', 'text!../../images/384_plate.svg'], function (plate96Svg, plate384Svg) {
+define(['text!labware/../images/96_plate.svg', 'text!labware/../images/384_plate.svg'], function (plate96Svg, plate384Svg) {
     'use strict';
 
     var plateView = function (owner, jquerySelection) {
