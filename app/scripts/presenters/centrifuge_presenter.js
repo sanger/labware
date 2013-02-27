@@ -16,41 +16,22 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston MA  02110-1301 USA
 */
-define(['../views/centrifuge_view'], function (View) {
+define(['labware/views/centrifuge_view',
+    'labware/presenters/base_presenter'],
+    function (View, BasePresenter) {
     'use strict';
 
     var centrifugePresenter = function (owner, presenterFactory) {
+        BasePresenter.call(this);
         this.presenterFactory = presenterFactory;
         this.owner = owner;
-        this.currentView = {};
+        this.init(View);
         window.centrifugePresenter = this;
 
         return this;
     };
 
-    centrifugePresenter.prototype.setupModel = function (model) {
-        this.model = model;
-        return this;
-    };
-
-    /* Initialises the presenter and defines the view to be used
-     *
-     *
-     * Arguments
-     * ---------
-     * container:    The selected jquery element
-     *
-     *
-     * Returns
-     * -------
-     * this
-     */
-    centrifugePresenter.prototype.setupView = function (jquerySelection) {
-
-        this.currentView = new View(this, jquerySelection);
-
-        return this;
-    };
+    centrifugePresenter.prototype = new BasePresenter();
 
 
     /* Draws the centrifuge in the given container space
@@ -69,40 +50,6 @@ define(['../views/centrifuge_view'], function (View) {
 
         // Pass the update call down to the view
         this.currentView.renderView();
-
-        return this;
-    };
-
-    /* Removes the image from the assigned view container
-     *
-     *
-     * Arguments
-     * ---------
-     * 
-     * 
-     * Returns
-     * -------
-     * this
-     */
-    centrifugePresenter.prototype.release = function () {
-
-        this.currentView.release();
-
-        return this;
-    };
-
-    /* Placeholder for future functionality
-     *
-     *
-     * Arguments
-     * ---------
-     * 
-     * 
-     * Returns
-     * -------
-     * this
-     */
-    centrifugePresenter.prototype.childDone = function (childPtr, action, data) {
 
         return this;
     };

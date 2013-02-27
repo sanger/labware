@@ -17,51 +17,22 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston MA  02110-1301 USA
 */
 
-define(['../views/spin_column_view', 'text!../json_data/spin_column.json'], function(View, spinColumnJson) {
+define(['labware/views/spin_column_view',
+    'text!labware/json_data/spin_column.json',
+    'labware/presenters/base_presenter'],
+    function(View, spinColumnJson, BasePresenter) {
     'use strict';
 
     var spinColumnPresenter = function (owner, presenterFactory) {
+        BasePresenter.call(this);
         this.presenterFactory = presenterFactory;
         this.owner = owner;
-        this.currentView = {};
+        this.init(View);
 
         return this;
     };
 
-    /* Sets up the model to be used with the presenter
-     *
-     *
-     * Arguments
-     * ---------
-     * model:    The model for the presenter
-     *
-     *
-     * Returns
-     * -------
-     * this
-     */
-    spinColumnPresenter.prototype.setupModel = function (model) {
-        this.model = model;
-        return this;
-    };
-
-    /* Initialises the presenter and defines the view to be used
-     *
-     *
-     * Arguments
-     * ---------
-     * container:    The selected jquery element
-     *
-     *
-     * Returns
-     * -------
-     * this
-     */
-    spinColumnPresenter.prototype.setupView = function (jquerySelection) {
-        this.currentView = new View(this, jquerySelection);
-
-        return this;
-    };
+    spinColumnPresenter.prototype = new BasePresenter();
 
     /* Sample method to show creation of spin column image with json dummy data
      * The section ID is currently set to spincolumn
@@ -84,59 +55,6 @@ define(['../views/spin_column_view', 'text!../json_data/spin_column.json'], func
         // send the json data and container information to define the spin column
         this.renderView(spinColumnData);
 
-        return this;
-    };
-
-
-    /* Draws the spin column in the given container space
-     *
-     *
-     * Arguments
-     * ---------
-     * data:    spin column data object
-     *
-     * 
-     * Returns
-     * -------
-     * this
-     */
-    spinColumnPresenter.prototype.renderView = function (data) {
-        // Pass the update call down to the view
-        this.currentView.renderView(data);
-
-        return this;
-
-    };
-
-    /* Removes the image from the assigned view container
-     *
-     *
-     * Arguments
-     * ---------
-     * 
-     * 
-     * Returns
-     * -------
-     * this
-     */
-    spinColumnPresenter.prototype.release = function () {
-        this.currentView.release();
-
-        return this;
-    };
-
-    /* Placeholder for future functionality
-     *
-     *
-     * Arguments
-     * ---------
-     * 
-     * 
-     * Returns
-     * -------
-     * this
-     */
-    spinColumnPresenter.prototype.childDone = function (childPtr, action, data) {
         return this;
     };
 

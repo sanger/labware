@@ -16,40 +16,22 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston MA  02110-1301 USA
 */
-define(['../views/qia_cube_view'], function (View) {
+define(['labware/views/qia_cube_view',
+    'labware/presenters/base_presenter'],
+    function (View, BasePresenter) {
     'use strict';
 
     var qiaCubePresenter = function (owner, presenterFactory) {
+        BasePresenter.call(this);
         this.presenterFactory = presenterFactory;
         this.owner = owner;
-        this.currentView = {};
+        this.init(View);
         window.qiaPresenter = this;
 
         return this;
     };
 
-    qiaCubePresenter.prototype.setupModel = function (model) {
-        this.model = model;
-        return this;
-    };
-
-    /* Initialises the presenter and defines the view to be used
-     *
-     *
-     * Arguments
-     * ---------
-     * container:    The selected jquery element
-     *
-     *
-     * Returns
-     * -------
-     * this
-     */
-    qiaCubePresenter.prototype.setupView = function (jquerySelection) {
-        this.currentView = new View(this, jquerySelection);
-
-        return this;
-    };
+    qiaCubePresenter.prototype = new BasePresenter();
 
 
     /* Draws the spin column in the given container space
@@ -68,38 +50,6 @@ define(['../views/qia_cube_view'], function (View) {
         // Pass the update call down to the view
         this.currentView.renderView();
 
-        return this;
-    };
-
-    /* Removes the image from the assigned view container
-     *
-     *
-     * Arguments
-     * ---------
-     * 
-     * 
-     * Returns
-     * -------
-     * this
-     */
-    qiaCubePresenter.prototype.release = function () {
-        this.currentView.release();
-
-        return this;
-    };
-
-    /* Placeholder for future functionality
-     *
-     *
-     * Arguments
-     * ---------
-     * 
-     * 
-     * Returns
-     * -------
-     * this
-     */
-    qiaCubePresenter.prototype.childDone = function (childPtr, action, data) {
         return this;
     };
 
@@ -137,45 +87,66 @@ define(['../views/qia_cube_view'], function (View) {
     qiaCubePresenter.prototype.displayTubes = function (tubesString) {
 
         var numTubes = parseInt(tubesString, 10);
+        var tubesConfiguration = this.getTubeConfigurations(numTubes);
+
+        this.currentView.setTubes(tubesConfiguration);
+
+        return this;
+    };
+
+    /* Gets the tube configuration for the number of tubes to be displayed
+     *
+     *
+     * Arguments
+     * ---------
+     * numTubes:    The number of tubes to display
+     *
+     *
+     * Returns
+     * -------
+     * The tube configuration
+     */
+    qiaCubePresenter.prototype.getTubeConfigurations = function (numTubes) {
+        var tubesConfiguration = [];
 
         switch (numTubes) {
             case 0:
-                this.currentView.setTubes([]);
+                tubesConfiguration = [];
                 break;
             case 2:
-                this.currentView.setTubes([1, 7]);
+                tubesConfiguration = [1, 7];
                 break;
             case 3:
-                this.currentView.setTubes([1, 9, 5]);
+                tubesConfiguration = [1, 9, 5];
                 break;
             case 4:
-                this.currentView.setTubes([1, 2, 7, 8]);
+                tubesConfiguration = [1, 2, 7, 8];
                 break;
             case 5:
-                this.currentView.setTubes([1, 2, 5, 8, 9]);
+                tubesConfiguration = [1, 2, 5, 8, 9];
                 break;
             case 6:
-                this.currentView.setTubes([1, 2, 3, 7, 8, 9]);
+                tubesConfiguration = [1, 2, 3, 7, 8, 9];
                 break;
             case 7:
-                this.currentView.setTubes([1, 2, 3, 6, 7, 9, 10]);
+                tubesConfiguration = [1, 2, 3, 6, 7, 9, 10];
                 break;
             case 8:
-                this.currentView.setTubes([1, 2, 3, 4, 7, 8, 9, 10]);
+                tubesConfiguration = [1, 2, 3, 4, 7, 8, 9, 10];
                 break;
             case 9:
-                this.currentView.setTubes([1, 2, 3, 5, 6, 7, 9, 10, 11]);
+                tubesConfiguration = [1, 2, 3, 5, 6, 7, 9, 10, 11];
                 break;
             case 10:
-                this.currentView.setTubes([1, 2, 3, 4, 5, 7, 8, 9, 10, 11]);
+                tubesConfiguration = [1, 2, 3, 4, 5, 7, 8, 9, 10, 11];
                 break;
             case 12:
-                this.currentView.setTubes([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]);
+                tubesConfiguration = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
                 break;
 
         }
 
-        return this;
+        return tubesConfiguration;
     };
 
     return qiaCubePresenter;

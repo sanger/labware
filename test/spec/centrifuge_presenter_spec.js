@@ -1,4 +1,4 @@
-define(['presenters/rack_presenter'], function(RackPresenter) {
+define(['presenters/centrifuge_presenter'], function(CentrifugePresenter) {
   'use strict';
 
     var view = undefined;
@@ -13,26 +13,30 @@ define(['presenters/rack_presenter'], function(RackPresenter) {
         view.renderView = function(data) {
         };
 
+        view.initTubesList = function(container) {
+        };
+
         spyOn(view, 'release');
         spyOn(view, 'renderView');
+        spyOn(view, 'initTubesList');
     }
 
-    describe("RackPresenter", function() {
+    describe("CentrifugePresenter", function() {
         describe("default constructor", function(){
             beforeEach(function(){
-                presenter = new RackPresenter();
+                presenter = new CentrifugePresenter();
             });
-            it('instantiates tube racks object', function(){
+            it('instantiates centrifuges object', function(){
                 expect(presenter).toBeDefined();
             });
-            it('is of type tube rack', function(){
-                expect(presenter instanceof RackPresenter).toBeTruthy();
+            it('is of type centrifuge', function(){
+                expect(presenter instanceof CentrifugePresenter).toBeTruthy();
             });
         });
 
         describe("Setup Model", function(){
             beforeEach(function(){
-                presenter = new RackPresenter();
+                presenter = new CentrifugePresenter();
                 presenter.setupModel(true);
             });
             it('Model is properly set', function(){
@@ -42,7 +46,7 @@ define(['presenters/rack_presenter'], function(RackPresenter) {
 
         describe("Setup View", function(){
             beforeEach(function(){
-                presenter = new RackPresenter();
+                presenter = new CentrifugePresenter();
                 presenter.setupView(true);
             });
             it('View is properly set', function(){
@@ -53,10 +57,10 @@ define(['presenters/rack_presenter'], function(RackPresenter) {
         describe("View interaction", function(){
             beforeEach(function(){
                 configureSpyView();
-                presenter = new RackPresenter();
+                presenter = new CentrifugePresenter();
                 presenter.currentView = view;
             });
-            it('Renders tube racks in the view', function(){
+            it('Renders centrifuges in the view', function(){
                 presenter.renderView();
                 expect(view.renderView).toHaveBeenCalled();
             });

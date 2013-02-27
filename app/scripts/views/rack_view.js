@@ -44,7 +44,7 @@ function is_empty(obj) {
     return true;
 }
 
-define(['text!../../images/rack.svg'], function (rackSvg) {
+define(['text!labware/../images/rack.svg'], function (rackSvg) {
     'use strict';
 
     var rackView = function (owner, jquerySelection) {

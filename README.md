@@ -15,7 +15,8 @@ require.config({
     hm: 'vendor/hm',
     esprima: 'vendor/esprima',
     jquery: 'vendor/jquery.min',
-    text: 'components/requirejs-text/text'
+    text: 'components/requirejs-text/text',
+    labware: '<location of labware scripts directory>'
   }
 });
 ```

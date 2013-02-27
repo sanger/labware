@@ -16,7 +16,7 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston MA  02110-1301 USA
 */
-define(['text!../../images/spin_column.svg'], function (spinColumnSvg) {
+define(['text!labware/../images/spin_column.svg'], function (spinColumnSvg) {
     'use strict';
 
     var spinColumnView = function (owner, jquerySelection) {
