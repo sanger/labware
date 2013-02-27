@@ -17,51 +17,23 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston MA  02110-1301 USA
 */
 
-define(['../views/tube_view', 'text!../json_data/tube.json', 'text!../json_data/tube_empty.json'], function(View, tubeJson, tubeEmptyJson) {
+define(['labware/views/tube_view',
+    'text!labware/json_data/tube.json',
+    'text!labware/json_data/tube_empty.json',
+    'labware/presenters/base_presenter'],
+    function(View, tubeJson, tubeEmptyJson, BasePresenter) {
     'use strict';
 
     var tubePresenter = function (owner, presenterFactory) {
+        BasePresenter.call(this);
         this.presenterFactory = presenterFactory;
         this.owner = owner;
-        this.currentView = {};
+        this.init(View);
 
         return this;
     };
 
-    /* Sets up the model to be used with the presenter
-     *
-     *
-     * Arguments
-     * ---------
-     * model:    The model for the presenter
-     *
-     *
-     * Returns
-     * -------
-     * this
-     */
-    tubePresenter.prototype.setupModel = function (model) {
-        this.model = model;
-        return this;
-    };
-
-    /* Initialises the presenter and defines the view to be used
-     *
-     *
-     * Arguments
-     * ---------
-     * container:    The selected jquery element
-     *
-     *
-     * Returns
-     * -------
-     * this
-     */
-    tubePresenter.prototype.setupView = function (jquerySelection) {
-        this.currentView = new View(this, jquerySelection);
-
-        return this;
-    };
+    tubePresenter.prototype = new BasePresenter();
 
     /* Sample method to show creation of test tube image with json dummy data
      * The section IDs are currently set to #tube1 and #tube2
@@ -90,59 +62,6 @@ define(['../views/tube_view', 'text!../json_data/tube.json', 'text!../json_data/
         // send the json data and container information to define the tube
         this.renderView(tubeEmptyData);
 
-        return this;
-    };
-
-
-    /* Draws the test tube in the given container space
-     *
-     *
-     * Arguments
-     * ---------
-     * data:    tube data object
-     *
-     * 
-     * Returns
-     * -------
-     * this
-     */
-    tubePresenter.prototype.renderView = function (data) {
-        // Pass the update call down to the view
-        this.currentView.renderView(data);
-
-        return this;
-
-    };
-
-    /* Removes the image from the assigned view container
-     *
-     *
-     * Arguments
-     * ---------
-     * 
-     * 
-     * Returns
-     * -------
-     * this
-     */
-    tubePresenter.prototype.release = function () {
-        this.currentView.release();
-
-        return this;
-    };
-
-    /* Placeholder for future functionality
-     *
-     *
-     * Arguments
-     * ---------
-     * 
-     * 
-     * Returns
-     * -------
-     * this
-     */
-    tubePresenter.prototype.childDone = function (childPtr, action, data) {
         return this;
     };
 

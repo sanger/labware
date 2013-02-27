@@ -14,12 +14,20 @@ require.config({
     config: 'test_config',
     text: 'components/requirejs-text/text',
     spec: 'spec',
-    json: 'json'
+    json: 'json',
+    labware:'scripts'
   }
 
 });
 
-require(['domReady!', 'spec/tube_presenter_spec', 'spec/plate_presenter_spec', 'spec/spin_column_presenter_spec'], function() {
+require(['domReady!',
+    'spec/tube_presenter_spec',
+    'spec/plate_presenter_spec',
+    'spec/spin_column_presenter_spec',
+    'spec/qia_cube_presenter_spec',
+    'spec/rack_presenter_spec',
+    'spec/centrifuge_presenter_spec'],
+    function() {
   runJasmineTests();
   //window.setTimeout(runJasmineTests, 1000);
 });
