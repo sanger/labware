@@ -1,7 +1,7 @@
 {
     "author": "WTSI PSD",
-    "name": "S2Mapper",
-    "version": "0.0.0",
+    "name": "labware",
+    "version": "0.0.1",
     "dependencies": {},
     "devDependencies": {
         "yeoman": "0.9.6",
