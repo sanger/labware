@@ -15,6 +15,7 @@ define(['presenters/rack_presenter'], function(RackPresenter) {
 
         spyOn(view, 'release');
         spyOn(view, 'renderView');
+        spyOn($, 'ajax');
     }
 
     describe("RackPresenter", function() {
@@ -30,13 +31,33 @@ define(['presenters/rack_presenter'], function(RackPresenter) {
             });
         });
 
-        describe("Setup Model", function(){
+        describe("UpdateModel", function(){
             beforeEach(function(){
                 presenter = new RackPresenter();
-                presenter.setupModel(true);
+                configureSpyView();
+                presenter.currentView = view;
+                spyOn($, "ajax").andCallFake(function(params) {
+                    params.success({"response" : true });
+                });
+                presenter.updateModel(true);
+
+
             });
-            it('Model is properly set', function(){
-                expect(presenter.model).toBe(true);
+            it('Model update calls ajax', function(){
+                expect($.ajax).toHaveBeenCalled();
+            });
+            it('Render view has been called', function(){
+                expect(view.renderView).toHaveBeenCalled();
+            });
+        });
+
+        describe("Setup Placeholder", function(){
+            beforeEach(function(){
+                presenter = new RackPresenter();
+                presenter.setupPlaceholder(true);
+            });
+            it('View is properly set', function(){
+                expect(presenter.jquerySelection).toBeDefined();
             });
         });
 

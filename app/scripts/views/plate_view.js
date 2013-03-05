@@ -22,6 +22,7 @@ define(['text!labware/../images/96_plate.svg', 'text!labware/../images/384_plate
     var plateView = function (owner, jquerySelection) {
         this.owner = owner;
         this.container = jquerySelection;
+        this.model = undefined;
 
         return this;
     };
@@ -39,38 +40,44 @@ define(['text!labware/../images/96_plate.svg', 'text!labware/../images/384_plate
      * -------
      * The spin column uuid
      */
-    plateView.prototype.renderView = function (data) {
-        // Store the spin column data from the json object in a hash with the uuid as a unique identifier
-        var newPlate = data.plate;
+    plateView.prototype.renderView = function () {
 
-        // Count the number of wells on the plate to determine its type
-        var count = this.countWells(newPlate.wells);
-        var plateSvg = {};
+        this.release();
 
-        if (count === 384) {
-            plateSvg = plate384Svg;
-        } else {
-            plateSvg = plate96Svg;
-        }
+        if (this.model && this.model.hasOwnProperty('plate')) {
 
-        // Parse the SVG xml data for the spin column image
-        var parser = new DOMParser();
-        var xmlDoc = parser.parseFromString(plateSvg, "image/svg+xml");
+            // Store the spin column data from the json object in a hash with the uuid as a unique identifier
+            var newPlate = this.model.plate;
 
-        // Store the xml data in an object
-        var importedNode = document.importNode(xmlDoc.documentElement, true);
+            // Count the number of wells on the plate to determine its type
+            var count = this.countWells(newPlate.wells);
+            var plateSvg = {};
 
-        // Append the svn image data the chosen section placeholder     
-        this.container.append(importedNode);
+            if (count === 384) {
+                plateSvg = plate384Svg;
+            } else {
+                plateSvg = plate96Svg;
+            }
 
-        // If the plate wells have aliquots then display the plate as filled
-        for (var well in newPlate.wells) {
-            if (newPlate.wells[well].length > 0) {
-                this.fillWell(well);
+            // Parse the SVG xml data for the spin column image
+            var parser = new DOMParser();
+            var xmlDoc = parser.parseFromString(plateSvg, "image/svg+xml");
+
+            // Store the xml data in an object
+            var importedNode = document.importNode(xmlDoc.documentElement, true);
+
+            // Append the svn image data the chosen section placeholder
+            this.container().append(importedNode);
+
+            // If the plate wells have aliquots then display the plate as filled
+            for (var well in newPlate.wells) {
+                if (newPlate.wells[well].length > 0) {
+                    this.fillWell(well);
+                }
             }
         }
 
-        return newPlate.uuid;
+        return this;
     };
 
     /* Removes the image from the assigned view container
@@ -85,7 +92,7 @@ define(['text!labware/../images/96_plate.svg', 'text!labware/../images/384_plate
      * this
      */
     plateView.prototype.release = function () {
-        this.container.empty();
+        this.container().empty();
     };
 
     /* Counts the number of wells on the plate to determine its type
@@ -126,7 +133,7 @@ define(['text!labware/../images/96_plate.svg', 'text!labware/../images/384_plate
     plateView.prototype.fillWell = function (well) {
     
         // Selects the svg element and changes the display property to show a liquid in the well 
-        this.container.find("svg #" + well).css("fill", "lime");
+        this.container().find("svg #" + well).css("fill", "lime");
     };
 
     return plateView;

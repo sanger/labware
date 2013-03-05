@@ -30,13 +30,29 @@ define(['presenters/gel_presenter'], function(GelPresenter) {
             });
         });
 
-        describe("Setup Model", function(){
+        describe("UpdateModel", function(){
             beforeEach(function(){
                 presenter = new GelPresenter();
-                presenter.setupModel(true);
+                configureSpyView();
+                presenter.currentView = view;
+                presenter.updateModel(true);
+
             });
             it('Model is properly set', function(){
                 expect(presenter.model).toBe(true);
+            });
+            it('Render view has been called', function(){
+                expect(view.renderView).toHaveBeenCalled();
+            });
+        });
+
+        describe("Setup Placeholder", function(){
+            beforeEach(function(){
+                presenter = new GelPresenter();
+                presenter.setupPlaceholder(true);
+            });
+            it('View is properly set', function(){
+                expect(presenter.jquerySelection).toBeDefined();
             });
         });
 

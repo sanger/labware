@@ -22,6 +22,7 @@ define(['text!labware/../images/spin_column.svg'], function (spinColumnSvg) {
     var spinColumnView = function (owner, jquerySelection) {
         this.owner = owner;
         this.container = jquerySelection;
+        this.model = undefined;
 
         return this;
     };
@@ -39,21 +40,27 @@ define(['text!labware/../images/spin_column.svg'], function (spinColumnSvg) {
      * -------
      * The spin column uuid
      */
-    spinColumnView.prototype.renderView = function (data) {
-        // Store the spin column data from the json object in a hash with the uuid as a unique identifier
-        var newSpinColumn = data.spin_columns;
+    spinColumnView.prototype.renderView = function () {
 
-        // Parse the SVG xml data for the spin column image
-        var parser = new DOMParser();
-        var xmlDoc = parser.parseFromString(spinColumnSvg, "image/svg+xml");
+        this.release();
 
-        // Store the xml data in an object
-        var importedNode = document.importNode(xmlDoc.documentElement, true);
+        if (this.model && this.model.hasOwnProperty('spin_columns')) {
 
-        // Append the svn image data the chosen section placeholder     
-        this.container.append(importedNode);
+            // Store the spin column data from the json object in a hash with the uuid as a unique identifier
+            var newSpinColumn = this.model.spin_columns;
 
-        return newSpinColumn.uuid;
+            // Parse the SVG xml data for the spin column image
+            var parser = new DOMParser();
+            var xmlDoc = parser.parseFromString(spinColumnSvg, "image/svg+xml");
+
+            // Store the xml data in an object
+            var importedNode = document.importNode(xmlDoc.documentElement, true);
+
+            // Append the svn image data the chosen section placeholder
+            this.container().append(importedNode);
+        }
+
+        return this;
     };
 
     /* Removes the image from the assigned view container
@@ -68,7 +75,7 @@ define(['text!labware/../images/spin_column.svg'], function (spinColumnSvg) {
      * this
      */
     spinColumnView.prototype.release = function () {
-        this.container.empty();
+        this.container().empty();
     };
 
     return spinColumnView;

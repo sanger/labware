@@ -22,16 +22,37 @@ define(['labware/views/centrifuge_view',
     'use strict';
 
     var centrifugePresenter = function (owner, presenterFactory) {
+        var tmpUrl = "http://localhost:8080/centifuge/";
         BasePresenter.call(this);
         this.presenterFactory = presenterFactory;
         this.owner = owner;
-        this.init(View);
+        this.init(View, tmpUrl);
         window.centrifugePresenter = this;
 
         return this;
     };
 
     centrifugePresenter.prototype = new BasePresenter();
+
+    /* Sets up the presenter
+     *
+     *
+     * Arguments
+     * ---------
+     * jquerySelection: The jQuery selection for the view
+     *
+     *
+     * Returns
+     * -------
+     * this
+     */
+    centrifugePresenter.prototype.setupPresenter = function (jquerySelection) {
+        this.setupPlaceholder(jquerySelection);
+        this.setupView();
+        this.renderView();
+
+        return this;
+    };
 
 
     /* Draws the centrifuge in the given container space

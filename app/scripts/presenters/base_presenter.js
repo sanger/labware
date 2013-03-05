@@ -16,15 +16,16 @@
  along with this program; if not, write to the Free Software
  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston MA  02110-1301 USA
  */
-define([], function () {
+define(['labware/dummyresource'], function (rsc) {
 
     var basePresenter = function() {
         this.currentView = {};
         this.model = {};
     };
     
-    basePresenter.prototype.init = function(view) {
+    basePresenter.prototype.init = function(view, baseUrl) {
         this.View = view;
+        this.baseUrl = baseUrl;
     };
     
     /* Initialises the presenter and defines the view to be used
@@ -39,26 +40,95 @@ define([], function () {
      * -------
      * this
      */
-    basePresenter.prototype.setupView = function (jquerySelection) {
-        this.currentView = new this.View(this, jquerySelection);
+    basePresenter.prototype.setupView = function () {
+        this.currentView = new this.View(this, this.jquerySelection);
+        this.currentView.model = this.model;
     
         return this;
     };
     
-    /* Sets up the model to be used with the presenter
+    /* Sets up the presenter
      *
      *
      * Arguments
      * ---------
-     * model:    The model for the presenter
+     * inputModel:      The model for the presenter
+     *
+     * jquerySelection: The jQuery selection for the view
      *
      *
      * Returns
      * -------
      * this
      */
-    basePresenter.prototype.setupModel = function (model) {
-        this.model = model;
+    basePresenter.prototype.setupPresenter = function (inputModel, jquerySelection) {
+        this.setupPlaceholder(jquerySelection);
+        this.setupView();
+        this.renderView();
+
+        this.updateModel(inputModel);
+
+        return this;
+    };
+
+    /* Updates the model to be used with the presenter
+     *
+     *
+     * Arguments
+     * ---------
+     * inputModel:    The model for the presenter
+     *
+     *
+     * Returns
+     * -------
+     * this
+     */
+    basePresenter.prototype.updateModel = function(inputModel) {
+        var theUrl = this.baseUrl + 123;
+        var that = this;
+        var dataReturn = {};
+
+      new rsc(inputModel.url, "read")
+        .done(function (s2Return) {
+          dataReturn = s2Return;
+        })
+        .fail(function () {
+          // TODO: deal with error reading the tube
+        })
+        .then(function () {
+          console.log("JSON has been found ");
+          console.log(that);
+          that.model = dataReturn.rawJson;
+          that.setupView();
+          that.renderView();
+        });
+
+//        $.ajax({url:theUrl, type:"GET"}).complete(
+//            function (data) {
+//                that.model = $.parseJSON(data.responseText);
+//                that.setupView();
+//                that.renderView();
+//            }
+//        );
+
+        return this;
+    };
+
+    /* Sets up the placeholder to be used with the presenter
+     *
+     *
+     * Arguments
+     * ---------
+     * jquerySelection:    The selection for the presenter
+     *
+     *
+     * Returns
+     * -------
+     * this
+     */
+    basePresenter.prototype.setupPlaceholder = function(jquerySelection) {
+        this.jquerySelection = jquerySelection;
+
         return this;
     };
     
@@ -74,9 +144,9 @@ define([], function () {
      * -------
      * this
      */
-    basePresenter.prototype.renderView = function (data) {
+    basePresenter.prototype.renderView = function () {
         // Pass the update call down to the view
-        this.currentView.renderView(data);
+        this.currentView.renderView();
     
         return this;
     

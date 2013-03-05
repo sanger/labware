@@ -25,10 +25,11 @@ define(['labware/views/tube_view',
     'use strict';
 
     var tubePresenter = function (owner, presenterFactory) {
+        var tmpUrl = "http://localhost:8080/tube/";
         BasePresenter.call(this);
         this.presenterFactory = presenterFactory;
         this.owner = owner;
-        this.init(View);
+        this.init(View, tmpUrl);
 
         return this;
     };
@@ -52,17 +53,16 @@ define(['labware/views/tube_view',
         var tubeData = JSON.parse(tubeJson);
         var tubeEmptyData = JSON.parse(tubeEmptyJson);
 
-        this.setupView(container1);
-
-        // send the json data and container information to define the tube
-        this.renderView(tubeData);
-
-        this.setupView(container2);
-
-        // send the json data and container information to define the tube
-        this.renderView(tubeEmptyData);
+        this.setupPresenter(tubeJson, container1);
 
         return this;
+    };
+
+    tubePresenter.prototype.drawWasteTube = function(jquerySelection)
+    {
+      this.setupPlaceholder(jquerySelection);
+      this.setupView();
+      this.currentView.drawWasteTube();
     };
 
     return tubePresenter;

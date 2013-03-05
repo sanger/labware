@@ -23,10 +23,11 @@ define(['labware/views/rack_view',
     'use strict';
 
     var rackPresenter = function (owner, presenterFactory) {
+        var tmpUrl = "http://localhost:8080/rack/";
         BasePresenter.call(this);
         this.presenterFactory = presenterFactory;
         this.owner = owner;
-        this.init(View);
+        this.init(View, tmpUrl);
 
         return this;
     };
@@ -49,10 +50,7 @@ define(['labware/views/rack_view',
     rackPresenter.prototype.drawSampleRack = function (container) {
         var rackData = JSON.parse(rackJson);
 
-        this.setupView(container);
-
-        // send the json data and container information to define the spin column
-        this.renderView(rackData);
+        this.setupPresenter(rackData, container);
 
         return this;
     };
