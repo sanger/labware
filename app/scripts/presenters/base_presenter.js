@@ -19,13 +19,15 @@
 define(['labware/dummyresource'], function (rsc) {
 
     var basePresenter = function() {
-        this.currentView = {};
-        this.model = {};
+        this.currentView = undefined;
+        this.model = undefined;
+        this.owner = undefined;
     };
     
-    basePresenter.prototype.init = function(view, baseUrl) {
+    basePresenter.prototype.init = function(owner, view, baseUrl) {
         this.View = view;
         this.baseUrl = baseUrl;
+        this.owner = owner;
     };
     
     /* Initialises the presenter and defines the view to be used
