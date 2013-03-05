@@ -25,10 +25,11 @@ define(['labware/views/plate_view',
     'use strict';
 
     var platePresenter = function (owner, presenterFactory) {
+        var tmpUrl = "http://localhost:8080/plate/";
         BasePresenter.call(this);
         this.presenterFactory = presenterFactory;
         this.owner = owner;
-        this.init(View);
+        this.init(View, tmpUrl);
 
         return this;
     };
@@ -52,15 +53,7 @@ define(['labware/views/plate_view',
         var plate96Data = JSON.parse(plate96Json);
         var plate384Data = JSON.parse(plate384Json);
 
-        this.setupView(container1);
-
-        // send the json data and container information to define the spin column
-        this.renderView(plate96Data);
-
-        this.setupView(container2);
-
-        // send the json data and container information to define the spin column
-        this.renderView(plate384Data);
+        this.setupPresenter(plate96Data, container1);
 
         return this;
     };

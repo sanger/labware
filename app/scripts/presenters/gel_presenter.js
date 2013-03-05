@@ -23,10 +23,11 @@ define(['labware/views/gel_view',
     'use strict';
 
     var gelPresenter = function (owner, presenterFactory) {
+        var tmpUrl = "http://localhost:8080/gel/";
         BasePresenter.call(this);
         this.presenterFactory = presenterFactory;
         this.owner = owner;
-        this.init(View);
+        this.init(View, tmpUrl);
 
         return this;
     };
@@ -49,10 +50,7 @@ define(['labware/views/gel_view',
     gelPresenter.prototype.drawSampleGel = function (container) {
         var gelData = JSON.parse(gelJson);
 
-        this.setupView(container);
-
-        // send the json data and container information to define the spin column
-        this.renderView(gelData);
+        this.setupPresenter(gelData, container);
 
         return this;
     };

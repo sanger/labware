@@ -24,10 +24,11 @@ define(['labware/views/spin_column_view',
     'use strict';
 
     var spinColumnPresenter = function (owner, presenterFactory) {
+        var tmpUrl = "http://localhost:8080/spincolumn/";
         BasePresenter.call(this);
         this.presenterFactory = presenterFactory;
         this.owner = owner;
-        this.init(View);
+        this.init(View, tmpUrl);
 
         return this;
     };
@@ -50,10 +51,7 @@ define(['labware/views/spin_column_view',
     spinColumnPresenter.prototype.drawSampleSpinColumn = function (container) {
         var spinColumnData = JSON.parse(spinColumnJson);
 
-        this.setupView(container);
-
-        // send the json data and container information to define the spin column
-        this.renderView(spinColumnData);
+        this.setupPresenter(spinColumnData, container);
 
         return this;
     };
