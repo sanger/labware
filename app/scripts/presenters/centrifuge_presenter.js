@@ -25,8 +25,7 @@ define(['labware/views/centrifuge_view',
         var tmpUrl = "http://localhost:8080/centifuge/";
         BasePresenter.call(this);
         this.presenterFactory = presenterFactory;
-        this.owner = owner;
-        this.init(View, tmpUrl);
+        this.init(owner, View, tmpUrl);
         window.centrifugePresenter = this;
 
         return this;
