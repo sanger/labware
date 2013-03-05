@@ -28,8 +28,7 @@ define(['labware/views/tube_view',
         var tmpUrl = "http://localhost:8080/tube/";
         BasePresenter.call(this);
         this.presenterFactory = presenterFactory;
-        this.owner = owner;
-        this.init(View, tmpUrl);
+        this.init(owner, View, tmpUrl);
 
         return this;
     };
