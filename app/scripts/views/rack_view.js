@@ -50,6 +50,7 @@ define(['text!labware/../images/rack.svg'], function (rackSvg) {
     var rackView = function (owner, jquerySelection) {
         this.owner = owner;
         this.container = jquerySelection;
+        this.model = undefined;
 
         return this;
     };
@@ -67,26 +68,32 @@ define(['text!labware/../images/rack.svg'], function (rackSvg) {
      * -------
      * The spin column uuid
      */
-    rackView.prototype.renderView = function (data) {
-        // Store the spin column data from the json object in a hash with the uuid as a unique identifier
-        var newRack = data.tube_rack;
+    rackView.prototype.renderView = function () {
 
-        // Parse the SVG xml data for the spin column image
-        var parser = new DOMParser();
-        var xmlDoc = parser.parseFromString(rackSvg, "image/svg+xml");
+        this.release();
 
-        // Store the xml data in an object
-        var importedNode = document.importNode(xmlDoc.documentElement, true);
+        if (this.model && this.model.hasOwnProperty('tube_rack')) {
 
-        // Append the svn image data the chosen section placeholder     
-        this.container.append(importedNode);
+            // Store the spin column data from the json object in a hash with the uuid as a unique identifier
+            var newRack = this.model.tube_rack;
 
-        // If the plate wells have aliquots then display the plate as filled
-        for (var well in newRack.tubes) {
-            this.fillWell(well);
+            // Parse the SVG xml data for the spin column image
+            var parser = new DOMParser();
+            var xmlDoc = parser.parseFromString(rackSvg, "image/svg+xml");
+
+            // Store the xml data in an object
+            var importedNode = document.importNode(xmlDoc.documentElement, true);
+
+            // Append the svn image data the chosen section placeholder
+            this.container().append(importedNode);
+
+            // If the plate wells have aliquots then display the plate as filled
+            for (var well in newRack.tubes) {
+                this.fillWell(well);
+            }
         }
 
-        return newRack.uuid;
+        return this;
     };
 
     /* Removes the image from the assigned view container
@@ -101,7 +108,7 @@ define(['text!labware/../images/rack.svg'], function (rackSvg) {
      * this
      */
     rackView.prototype.release = function () {
-        this.container.empty();
+        this.container().empty();
     };
 
     /* Modifies the plate well in the defined HTML section container to display as full
@@ -119,7 +126,7 @@ define(['text!labware/../images/rack.svg'], function (rackSvg) {
     rackView.prototype.fillWell = function (well) {
     
         // Selects the svg element and changes the display property to show a liquid in the well 
-        this.container.find("svg #" + well).css("fill", "lime");
+        this.container().find("svg #" + well).css("fill", "lime");
     };
 
     return rackView;

@@ -41,6 +41,9 @@ define(['text!labware/../images/qia_cube.svg'], function (qiaCubeSvg) {
      * The spin column uuid
      */
     qiaCubeView.prototype.renderView = function () {
+
+        this.release();
+
         // Parse the SVG xml data for the spin column image
         var parser = new DOMParser();
         var xmlDoc = parser.parseFromString(qiaCubeSvg, "image/svg+xml");
@@ -49,7 +52,7 @@ define(['text!labware/../images/qia_cube.svg'], function (qiaCubeSvg) {
         var importedNode = document.importNode(xmlDoc.documentElement, true);
 
         // Append the svn image data the chosen section placeholder     
-        this.container.append(importedNode);
+        this.container().append(importedNode);
 
         // Initialise the QiaCube as Empty
         this.setTubes([]);
@@ -69,7 +72,7 @@ define(['text!labware/../images/qia_cube.svg'], function (qiaCubeSvg) {
      * this
      */
     qiaCubeView.prototype.release = function () {
-        this.container.empty();
+        this.container().empty();
         return this;
     };
 
@@ -95,7 +98,7 @@ define(['text!labware/../images/qia_cube.svg'], function (qiaCubeSvg) {
             }
 
             // Selects the svg element and changes the display property of the current tube
-            this.container.find("svg .tube" + x).css("display", displaySwitch);
+            this.container().find("svg .tube" + x).css("display", displaySwitch);
         }
 
     };

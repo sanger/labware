@@ -22,10 +22,11 @@ define(['labware/views/qia_cube_view',
     'use strict';
 
     var qiaCubePresenter = function (owner, presenterFactory) {
+        var tmpUrl = "http://localhost:8080/qiacube/";
         BasePresenter.call(this);
         this.presenterFactory = presenterFactory;
         this.owner = owner;
-        this.init(View);
+        this.init(View, tmpUrl);
         window.qiaPresenter = this;
 
         return this;
@@ -33,6 +34,25 @@ define(['labware/views/qia_cube_view',
 
     qiaCubePresenter.prototype = new BasePresenter();
 
+    /* Sets up the presenter
+     *
+     *
+     * Arguments
+     * ---------
+     * jquerySelection: The jQuery selection for the view
+     *
+     *
+     * Returns
+     * -------
+     * this
+     */
+    qiaCubePresenter.prototype.setupPresenter = function (jquerySelection) {
+        this.setupPlaceholder(jquerySelection);
+        this.setupView();
+        this.renderView();
+
+        return this;
+    };
 
     /* Draws the spin column in the given container space
      *

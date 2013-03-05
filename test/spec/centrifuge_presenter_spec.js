@@ -34,13 +34,29 @@ define(['presenters/centrifuge_presenter'], function(CentrifugePresenter) {
             });
         });
 
-        describe("Setup Model", function(){
+        describe("UpdateModel", function(){
             beforeEach(function(){
                 presenter = new CentrifugePresenter();
-                presenter.setupModel(true);
+                configureSpyView();
+                presenter.currentView = view;
+                presenter.updateModel(true);
+
             });
             it('Model is properly set', function(){
                 expect(presenter.model).toBe(true);
+            });
+            it('Render view has been called', function(){
+                expect(view.renderView).toHaveBeenCalled();
+            });
+        });
+
+        describe("Setup Placeholder", function(){
+            beforeEach(function(){
+                presenter = new CentrifugePresenter();
+                presenter.setupPlaceholder(true);
+            });
+            it('View is properly set', function(){
+                expect(presenter.jquerySelection).toBeDefined();
             });
         });
 

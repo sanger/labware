@@ -50,6 +50,7 @@ define(['text!labware/../images/96_gel.svg'], function (gelSvg) {
     var gelView = function (owner, jquerySelection) {
         this.owner = owner;
         this.container = jquerySelection;
+        this.model = undefined;
 
         return this;
     };
@@ -67,28 +68,35 @@ define(['text!labware/../images/96_gel.svg'], function (gelSvg) {
      * -------
      * The gel plate uuid
      */
-    gelView.prototype.renderView = function (data) {
-        // Store the gel plate data from the json object in a hash with the uuid as a unique identifier
-        var newGel = data.gel;
+    gelView.prototype.renderView = function () {
 
-        // Parse the SVG xml data for the spin column image
-        var parser = new DOMParser();
-        var xmlDoc = parser.parseFromString(gelSvg, "image/svg+xml");
+        this.release();
 
-        // Store the xml data in an object
-        var importedNode = document.importNode(xmlDoc.documentElement, true);
+        if (this.model && this.model.hasOwnProperty('gel')) {
 
-        // Append the svn image data the chosen section placeholder     
-        this.container.append(importedNode);
+            // Store the gel plate data from the json object in a hash with the uuid as a unique identifier
+            var newGel = this.model.gel;
 
-        // If the plate windows have samples then display the window as filled
-        for (var window in newGel.windows) {
-            if (newGel.windows[window].length > 0) {
-                this.fillWindow(window);
+            // Parse the SVG xml data for the spin column image
+            var parser = new DOMParser();
+            var xmlDoc = parser.parseFromString(gelSvg, "image/svg+xml");
+
+            // Store the xml data in an object
+            var importedNode = document.importNode(xmlDoc.documentElement, true);
+
+            // Append the svn image data the chosen section placeholder
+            this.container().append(importedNode);
+
+            // If the plate windows have samples then display the window as filled
+            for (var window in newGel.windows) {
+                if (newGel.windows[window].length > 0) {
+                    this.fillWindow(window);
+                }
             }
+
         }
 
-        return newGel.uuid;
+        return this;
     };
 
     /* Removes the image from the assigned view container
@@ -103,7 +111,7 @@ define(['text!labware/../images/96_gel.svg'], function (gelSvg) {
      * this
      */
     gelView.prototype.release = function () {
-        this.container.empty();
+        this.container().empty();
     };
 
     /* Modifies the plate window in the defined HTML section container to display as full
@@ -121,7 +129,7 @@ define(['text!labware/../images/96_gel.svg'], function (gelSvg) {
     gelView.prototype.fillWindow = function (window) {
     
         // Selects the svg element and changes the display property to show a sample in the window 
-        this.container.find("svg #" + window).css("fill", "blue");
+        this.container().find("svg #" + window).css("fill", "blue");
     };
 
     return gelView;

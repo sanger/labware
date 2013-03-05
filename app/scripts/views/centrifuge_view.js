@@ -42,6 +42,8 @@ define(['text!labware/../images/centrifuge.svg'], function (centrifugeSvg) {
      */
     centrifugeView.prototype.renderView = function () {
 
+        this.release();
+
         // Parse the SVG xml data for the spin column image
         var parser = new DOMParser();
         var xmlDoc = parser.parseFromString(centrifugeSvg, "image/svg+xml");
@@ -50,7 +52,7 @@ define(['text!labware/../images/centrifuge.svg'], function (centrifugeSvg) {
         var importedNode = document.importNode(xmlDoc.documentElement, true);
 
         // Append the svn image data the chosen section placeholder     
-        this.container.append(importedNode);
+        this.container().append(importedNode);
 
         // Initialise the centrifuge as Empty
         this.setTubes([]);
@@ -71,7 +73,7 @@ define(['text!labware/../images/centrifuge.svg'], function (centrifugeSvg) {
      */
     centrifugeView.prototype.release = function () {
 
-        this.container.empty();
+        this.container().empty();
     };
 
     /* Sets which tubes are displayed on the centrifuge
@@ -97,7 +99,7 @@ define(['text!labware/../images/centrifuge.svg'], function (centrifugeSvg) {
             }
 
             // Selects the svg element and changes the display property of the current tube
-            this.container.find("svg .tube" + x).css("display", displaySwitch);
+            this.container().find("svg .tube" + x).css("display", displaySwitch);
         }
 
     };

@@ -16,12 +16,13 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston MA  02110-1301 USA
 */
-define(['text!labware/../images/tube_final4.svg'], function (tubeSvg) {
+define(['text!labware/../images/tube_final4.svg', 'text!labware/../images/waste_tube.svg'], function (tubeSvg, wasteTubeSvg) {
     'use strict';
 
     var tubeView = function (owner, jquerySelection) {
         this.owner = owner;
         this.container = jquerySelection;
+        this.model = undefined;
 
         return this;
     };
@@ -39,42 +40,59 @@ define(['text!labware/../images/tube_final4.svg'], function (tubeSvg) {
      * -------
      * The tube uuid
      */
-    tubeView.prototype.renderView = function (data) {
+    tubeView.prototype.renderView = function () {
         var volumeText = "-";
         var barcodeText = "N/A";
         var typeText = "-";
+        var uuidText = '-';
 
-        // Store the tube data from the json object in a hash with the uuid as a unique identifier
-        var newTube = data.tube;
+        if (this.model && this.model.hasOwnProperty('tube')) {
 
-        // Parse the SVG xml data for the plate image
-        var parser = new DOMParser();
-        var xmlDoc = parser.parseFromString(tubeSvg, "image/svg+xml");
+            this.drawTube(tubeSvg);
 
-        // Store the xml data in an object
-        var importedNode = document.importNode(xmlDoc.documentElement, true);
+            // Store the tube data from the json object in a hash with the uuid as a unique identifier
+            var newTube = this.model.tube;
+            uuidText = newTube.uuid;
 
-        // Append the svn image data the chosen section placeholder     
-        this.container.append(importedNode);
+            // If the tube has aliquots then display the tube as filled
+            if (newTube.aliquots.length > 0) {
 
-        // If the tube has aliquots then display the tube as filled
-        if (newTube.aliquots.length > 0) {
+                // TODO: When we receive json with multiple aliquots this will have to be adapted to handle better
+                var aliquot = newTube.aliquots[0];
+                volumeText = aliquot.quantity + " " + aliquot.unit;
+                typeText = aliquot.type;
+                this.fillTube(aliquot.type);
+            }
 
-            // TODO: When we receive json with multiple aliquots this will have to be adapted to handle better
-            var aliquot = newTube.aliquots[0];
-            volumeText = aliquot.quantity + " " + aliquot.unit;
-            typeText = aliquot.type;
-            this.fillTube(aliquot.type);
+            // Set the detail text of the tube in question
+            this.container().find("svg #ID_Text tspan").text(uuidText);
+            this.container().find("svg #Volume_Text tspan").text(volumeText);
+            this.container().find("svg #Barcode_Text tspan").text(barcodeText);
+            this.container().find("svg #Type_Text tspan").text(typeText);
         }
 
-        // Set the detail text of the tube in question
-        this.container.find("svg #ID_Text tspan").text(newTube.uuid);
-        this.container.find("svg #Volume_Text tspan").text(volumeText);
-        this.container.find("svg #Barcode_Text tspan").text(barcodeText);
-        this.container.find("svg #Type_Text tspan").text(typeText);
-
-        return newTube.uuid;
+        return this;
     };
+
+    tubeView.prototype.drawTube = function(inputSvg) {
+
+      this.release();
+
+      // Parse the SVG xml data for the plate image
+      var parser = new DOMParser();
+      var xmlDoc = parser.parseFromString(inputSvg, "image/svg+xml");
+
+      // Store the xml data in an object
+      var importedNode = document.importNode(xmlDoc.documentElement, true);
+
+      // Append the svn image data the chosen section placeholder
+      this.container().append(importedNode);
+    };
+
+    tubeView.prototype.drawWasteTube = function() {
+      this.drawTube(wasteTubeSvg);
+      return this;
+    }
 
     /* Removes the image from the assigned view container
      *
@@ -88,7 +106,7 @@ define(['text!labware/../images/tube_final4.svg'], function (tubeSvg) {
      * this
      */
     tubeView.prototype.release = function () {
-        this.container.empty();
+        this.container().empty();
     };
 
     /* Modifies the tube in the defined HTML section container to display as full
@@ -103,9 +121,9 @@ define(['text!labware/../images/tube_final4.svg'], function (tubeSvg) {
      */
     tubeView.prototype.fillTube = function (aliquotType) {
         // Selects the svg element and changes the display property to show a liquid in the tube 
-        this.container.find("svg #aliquot").css("display", "block");
+        this.container().find("svg #aliquot").css("display", "block");
         // Change the liquid colour to match the variation in type
-        this.container.find("svg #linearGradientAliquot").attr("xlink:href", "#Gradient_" + aliquotType);
+        this.container().find("svg #linearGradientAliquot").attr("xlink:href", "#Gradient_" + aliquotType);
     };
 
     return tubeView;

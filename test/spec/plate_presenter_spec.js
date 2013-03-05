@@ -30,13 +30,29 @@ define(['presenters/plate_presenter'], function(PlatePresenter) {
             });
         });
 
-        describe("Setup Model", function(){
+        describe("UpdateModel", function(){
             beforeEach(function(){
                 presenter = new PlatePresenter();
-                presenter.setupModel(true);
+                configureSpyView();
+                presenter.currentView = view;
+                presenter.updateModel(true);
+
             });
             it('Model is properly set', function(){
                 expect(presenter.model).toBe(true);
+            });
+            it('Render view has been called', function(){
+                expect(view.renderView).toHaveBeenCalled();
+            });
+        });
+
+        describe("Setup Placeholder", function(){
+            beforeEach(function(){
+                presenter = new PlatePresenter();
+                presenter.setupPlaceholder(true);
+            });
+            it('View is properly set', function(){
+                expect(presenter.jquerySelection).toBeDefined();
             });
         });
 
