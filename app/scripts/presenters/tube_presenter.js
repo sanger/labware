@@ -64,5 +64,18 @@ define(['labware/views/tube_view',
       this.currentView.drawWasteTube();
     };
 
+      tubePresenter.prototype.getAliquotType = function()
+      {
+        var type = '';
+
+        if (this.model && this.model.hasOwnProperty('tube')) {
+          if (this.model.tube.aliquots.length > 0) {
+            type = this.model.tube.aliquots[0].type;
+          }
+        }
+
+        return type;
+      }
+
     return tubePresenter;
 });

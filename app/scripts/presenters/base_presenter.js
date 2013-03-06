@@ -103,6 +103,7 @@ define(['labware/dummyresource'], function (rsc) {
           that.model = dataReturn.rawJson;
           that.setupView();
           that.renderView();
+          that.owner.childDone(that, 'object rendered', {});
         });
 
 //        $.ajax({url:theUrl, type:"GET"}).complete(
