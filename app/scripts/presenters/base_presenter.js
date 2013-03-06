@@ -89,7 +89,7 @@ define(['config','mapper/s2_root', 'mapper/s2_tube_resource', 'mapper/s2_resourc
     this.model = inputModel;
     this.setupView();
     this.renderView();
-    this.owner.childDone(this, 'object rendered', {});
+    this.owner.childDone(this, 'object rendered', inputModel);
 
     return this;
   };
