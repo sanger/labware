@@ -16,176 +16,153 @@
  along with this program; if not, write to the Free Software
  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston MA  02110-1301 USA
  */
-define(['labware/dummyresource'], function (rsc) {
+define(['config','mapper/s2_root', 'mapper/s2_tube_resource', 'mapper/s2_resource_factory'], function (config, S2Root, s2Tube, S2Factory) {
 
-    var basePresenter = function() {
-        this.currentView = undefined;
-        this.model = undefined;
-        this.owner = undefined;
-    };
-    
-    basePresenter.prototype.init = function(owner, view, baseUrl) {
-        this.View = view;
-        this.baseUrl = baseUrl;
-        this.owner = owner;
-    };
-    
-    /* Initialises the presenter and defines the view to be used
-     *
-     *
-     * Arguments
-     * ---------
-     * container:    The selected jquery element
-     *
-     *
-     * Returns
-     * -------
-     * this
-     */
-    basePresenter.prototype.setupView = function () {
-        this.currentView = new this.View(this, this.jquerySelection);
-        this.currentView.model = this.model;
-    
-        return this;
-    };
-    
-    /* Sets up the presenter
-     *
-     *
-     * Arguments
-     * ---------
-     * inputModel:      The model for the presenter
-     *
-     * jquerySelection: The jQuery selection for the view
-     *
-     *
-     * Returns
-     * -------
-     * this
-     */
-    basePresenter.prototype.setupPresenter = function (inputModel, jquerySelection) {
-        this.setupPlaceholder(jquerySelection);
-        this.setupView();
-        this.renderView();
+  var basePresenter = function () {
+    this.currentView = undefined;
+    this.model = undefined;
+    this.owner = undefined;
+  };
 
-        this.updateModel(inputModel);
+  basePresenter.prototype.init = function (owner, view, baseUrl) {
+    this.View = view;
+    this.baseUrl = baseUrl;
+    this.owner = owner;
+  };
 
-        return this;
-    };
+  /* Initialises the presenter and defines the view to be used
+   *
+   *
+   * Arguments
+   * ---------
+   * container:    The selected jquery element
+   *
+   *
+   * Returns
+   * -------
+   * this
+   */
+  basePresenter.prototype.setupView = function () {
+    this.currentView = new this.View(this, this.jquerySelection);
+    this.currentView.model = this.model;
 
-    /* Updates the model to be used with the presenter
-     *
-     *
-     * Arguments
-     * ---------
-     * inputModel:    The model for the presenter
-     *
-     *
-     * Returns
-     * -------
-     * this
-     */
-    basePresenter.prototype.updateModel = function(inputModel) {
-        var theUrl = this.baseUrl + 123;
-        var that = this;
-        var dataReturn = {};
+    return this;
+  };
 
-      new rsc(inputModel.url, "read")
-        .done(function (s2Return) {
-          dataReturn = s2Return;
-        })
-        .fail(function () {
-          // TODO: deal with error reading the tube
-        })
-        .then(function () {
-          console.log("JSON has been found ");
-          console.log(that);
-          that.model = dataReturn.rawJson;
-          that.setupView();
-          that.renderView();
-          that.owner.childDone(that, 'object rendered', {});
-        });
+  /* Sets up the presenter
+   *
+   *
+   * Arguments
+   * ---------
+   * inputModel:      The model for the presenter
+   *
+   * jquerySelection: The jQuery selection for the view
+   *
+   *
+   * Returns
+   * -------
+   * this
+   */
+  basePresenter.prototype.setupPresenter = function (inputModel, jquerySelection) {
+    this.setupPlaceholder(jquerySelection);
+    this.setupView();
+    this.renderView();
 
-//        $.ajax({url:theUrl, type:"GET"}).complete(
-//            function (data) {
-//                that.model = $.parseJSON(data.responseText);
-//                that.setupView();
-//                that.renderView();
-//            }
-//        );
+    this.updateModel(inputModel);
 
-        return this;
-    };
+    return this;
+  };
 
-    /* Sets up the placeholder to be used with the presenter
-     *
-     *
-     * Arguments
-     * ---------
-     * jquerySelection:    The selection for the presenter
-     *
-     *
-     * Returns
-     * -------
-     * this
-     */
-    basePresenter.prototype.setupPlaceholder = function(jquerySelection) {
-        this.jquerySelection = jquerySelection;
+  /* Updates the model to be used with the presenter
+   *
+   *
+   * Arguments
+   * ---------
+   * inputModel:    The model for the presenter
+   *
+   *
+   * Returns
+   * -------
+   * this
+   */
+  basePresenter.prototype.updateModel = function (inputModel) {
+    this.model = inputModel;
+    this.setupView();
+    this.renderView();
+    this.owner.childDone(this, 'object rendered', {});
 
-        return this;
-    };
-    
-    /* Draws the test tube in the given container space
-     *
-     *
-     * Arguments
-     * ---------
-     * data:    tube data object
-     *
-     * 
-     * Returns
-     * -------
-     * this
-     */
-    basePresenter.prototype.renderView = function () {
-        // Pass the update call down to the view
-        this.currentView.renderView();
-    
-        return this;
-    
-    };
-    
-    /* Removes the image from the assigned view container
-     *
-     *
-     * Arguments
-     * ---------
-     * 
-     * 
-     * Returns
-     * -------
-     * this
-     */
-    basePresenter.prototype.release = function () {
-        this.currentView.release();
-    
-        return this;
-    };
-    
-    /* Placeholder for future functionality
-     *
-     *
-     * Arguments
-     * ---------
-     * 
-     * 
-     * Returns
-     * -------
-     * this
-     */
-    basePresenter.prototype.childDone = function (childPtr, action, data) {
-        return this;
-    };
-    
-    return basePresenter;
+    return this;
+  };
+
+  /* Sets up the placeholder to be used with the presenter
+   *
+   *
+   * Arguments
+   * ---------
+   * jquerySelection:    The selection for the presenter
+   *
+   *
+   * Returns
+   * -------
+   * this
+   */
+  basePresenter.prototype.setupPlaceholder = function (jquerySelection) {
+    this.jquerySelection = jquerySelection;
+
+    return this;
+  };
+
+  /* Draws the test tube in the given container space
+   *
+   *
+   * Arguments
+   * ---------
+   * data:    tube data object
+   *
+   *
+   * Returns
+   * -------
+   * this
+   */
+  basePresenter.prototype.renderView = function () {
+    // Pass the update call down to the view
+    this.currentView.renderView();
+
+    return this;
+
+  };
+
+  /* Removes the image from the assigned view container
+   *
+   *
+   * Arguments
+   * ---------
+   *
+   *
+   * Returns
+   * -------
+   * this
+   */
+  basePresenter.prototype.release = function () {
+    this.currentView.release();
+
+    return this;
+  };
+
+  /* Placeholder for future functionality
+   *
+   *
+   * Arguments
+   * ---------
+   *
+   *
+   * Returns
+   * -------
+   * this
+   */
+  basePresenter.prototype.childDone = function (childPtr, action, data) {
+    return this;
+  };
+
+  return basePresenter;
 });
