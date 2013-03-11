@@ -1,12 +1,13 @@
 {
   "name": "labware",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "main": "./tubes/html/index.html",
   "dependencies": {
     "jquery": "~1.9.1",
     "d3": "~3.0.6",
     "requirejs-text": "~2.0.5",
     "requirejs-domready": "~2.0.1",
-    "requirejs": "~2.1.4"
+    "requirejs": "~2.1.4",
+    "S2Mapper": "https://github.com/sanger/S2Mapper.git"
   }
 }

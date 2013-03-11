@@ -13,6 +13,7 @@ require.config({
     images: 'images',
     config: 'test_config',
     text: 'components/requirejs-text/text',
+    mapper:'/components/S2Mapper/app/scripts/mapper',
     spec: 'spec',
     json: 'json',
     labware:'scripts'
