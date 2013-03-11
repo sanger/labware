@@ -24,9 +24,9 @@ define(['config','mapper/s2_root', 'mapper/s2_tube_resource', 'mapper/s2_resourc
     this.owner = undefined;
   };
 
-  basePresenter.prototype.init = function (owner, view, baseUrl) {
+  basePresenter.prototype.init = function (owner, view, labwareType) {
     this.View = view;
-    this.baseUrl = baseUrl;
+    this.labwareType = labwareType;
     this.owner = owner;
   };
 
@@ -89,7 +89,7 @@ define(['config','mapper/s2_root', 'mapper/s2_tube_resource', 'mapper/s2_resourc
     this.model = inputModel;
     this.setupView();
     this.renderView();
-    this.owner.childDone(this, 'object rendered', inputModel);
+    this.owner.childDone(this, this.labwareType + ' rendered', inputModel);
 
     return this;
   };

@@ -25,10 +25,10 @@ define(['labware/views/plate_view',
     'use strict';
 
     var platePresenter = function (owner, presenterFactory) {
-        var tmpUrl = "http://localhost:8080/plate/";
+        var labType = "plate";
         BasePresenter.call(this);
         this.presenterFactory = presenterFactory;
-        this.init(owner, View, tmpUrl);
+        this.init(owner, View, labType);
 
         return this;
     };

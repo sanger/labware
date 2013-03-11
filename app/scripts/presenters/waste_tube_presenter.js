@@ -23,10 +23,10 @@ define(['labware/views/waste_tube_view',
     'use strict';
 
     var tubePresenter = function (owner, presenterFactory) {
-      var tmpUrl = "http://localhost:8080/tube/";
+      var labType = "wasteTube";
       BasePresenter.call(this);
       this.presenterFactory = presenterFactory;
-      this.init(owner, View, tmpUrl);
+      this.init(owner, View, labType);
 
       return this;
     };
