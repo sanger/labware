@@ -58,7 +58,7 @@
     <linearGradient
        x1="0"
        x2="1"
-       id="Gradient"
+       id="WasteTube_Gradient"
        gradientUnits="userSpaceOnUse">
       <stop
          offset="0"
@@ -74,13 +74,13 @@
          id="stop3411" />
     </linearGradient>
     <linearGradient
-       id="Obj_Gradient"
-       xlink:href="#Gradient"
+       id="WasteTube_Obj_Gradient"
+       xlink:href="#WasteTube_Gradient"
        gradientTransform="matrix(28.3465,0,0,28.3465,141.732,120.4724)" />
     <linearGradient
        x1="0"
        x2="1"
-       id="Gradient_2"
+       id="WasteTube_Gradient_2"
        gradientUnits="userSpaceOnUse">
       <stop
          offset="0"
@@ -99,13 +99,13 @@
          id="stop3419" />
     </linearGradient>
     <linearGradient
-       id="Obj_Gradient_2"
-       xlink:href="#Gradient_2"
+       id="WasteTube_Obj_Gradient_2"
+       xlink:href="#WasteTube_Gradient_2"
        gradientTransform="matrix(28.3465,0,0,28.3465,141.732,124.0157)" />
     <linearGradient
        x1="0"
        x2="1"
-       id="Gradient_3"
+       id="WasteTube_Gradient_3"
        gradientUnits="userSpaceOnUse">
       <stop
          offset="0"
@@ -124,8 +124,8 @@
          id="stop3427" />
     </linearGradient>
     <linearGradient
-       id="Obj_Gradient_3"
-       xlink:href="#Gradient_3"
+       id="WasteTube_Obj_Gradient_3"
+       xlink:href="#WasteTube_Gradient_3"
        gradientTransform="matrix(28.3465,0,0,22.174222,141.732,131.27387)" />
     <filter
        id="Shadow"
@@ -166,7 +166,7 @@
     <linearGradient
        x1="0"
        x2="1"
-       id="Gradient_4"
+       id="WasteTube_Gradient_4"
        gradientUnits="userSpaceOnUse">
       <stop
          offset="0"
@@ -182,42 +182,42 @@
          id="stop3450" />
     </linearGradient>
     <linearGradient
-       id="Obj_Gradient_4"
-       xlink:href="#Gradient_4"
+       id="WasteTube_Obj_Gradient_4"
+       xlink:href="#WasteTube_Gradient_4"
        gradientTransform="matrix(35.4331,0,0,35.4331,138.189,64.25195)" />
     <linearGradient
        inkscape:collect="always"
-       xlink:href="#Gradient_3"
+       xlink:href="#WasteTube_Gradient_3"
        id="linearGradient4529"
        gradientTransform="matrix(28.3465,0,0,22.174222,141.732,131.27387)" />
     <linearGradient
        inkscape:collect="always"
-       xlink:href="#Gradient_3"
+       xlink:href="#WasteTube_Gradient_3"
        id="linearGradient4565"
        gradientTransform="matrix(28.3465,0,0,22.174222,141.732,131.27387)" />
     <linearGradient
        inkscape:collect="always"
-       xlink:href="#Gradient_3"
+       xlink:href="#WasteTube_Gradient_3"
        id="linearGradient4578"
        gradientTransform="matrix(28.3465,0,0,22.174222,141.732,131.27387)" />
     <linearGradient
        inkscape:collect="always"
-       xlink:href="#Gradient_4"
+       xlink:href="#WasteTube_Gradient_4"
        id="linearGradient4582"
        gradientTransform="matrix(35.4331,0,0,35.4331,138.189,64.25195)" />
     <linearGradient
        inkscape:collect="always"
-       xlink:href="#Gradient_4"
+       xlink:href="#WasteTube_Gradient_4"
        id="linearGradient4596"
        gradientTransform="matrix(35.4331,0,0,35.4331,138.189,64.25195)" />
     <linearGradient
        inkscape:collect="always"
-       xlink:href="#Gradient"
+       xlink:href="#WasteTube_Gradient"
        id="linearGradient4629"
        gradientTransform="matrix(28.3465,0,0,28.3465,141.732,120.4724)" />
     <linearGradient
        inkscape:collect="always"
-       xlink:href="#Gradient_2"
+       xlink:href="#WasteTube_Gradient_2"
        id="linearGradient4631"
        gradientTransform="matrix(28.3465,0,0,28.3465,141.732,124.0157)" />
   </defs>
