@@ -22,10 +22,10 @@ define(['labware/views/qia_cube_view',
     'use strict';
 
     var qiaCubePresenter = function (owner, presenterFactory) {
-        var tmpUrl = "http://localhost:8080/qiacube/";
+        var labType = "qiaQube";
         BasePresenter.call(this);
         this.presenterFactory = presenterFactory;
-        this.init(owner, View, tmpUrl);
+        this.init(owner, View, labType);
         window.qiaPresenter = this;
 
         return this;
