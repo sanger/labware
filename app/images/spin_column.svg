@@ -84,7 +84,7 @@
     <linearGradient
        x1="0"
        x2="1"
-       id="Gradient"
+       id="SpinColumn_Gradient"
        gradientUnits="userSpaceOnUse">
       <stop
          offset="0"
@@ -101,13 +101,13 @@
          id="stop61352" />
     </linearGradient>
     <linearGradient
-       id="Obj_Gradient"
-       xlink:href="#Gradient"
+       id="SpinColumn_Obj_Gradient"
+       xlink:href="#SpinColumn_Gradient"
        gradientTransform="matrix(-144.33013,1.0849944,-1.0849944,-144.33013,279.16506,75.957503)" />
     <linearGradient
        x1="0"
        x2="1"
-       id="Gradient_2"
+       id="SpinColumn_Gradient_2"
        gradientUnits="userSpaceOnUse">
       <stop
          offset="0"
@@ -124,57 +124,57 @@
          id="stop61360" />
     </linearGradient>
     <linearGradient
-       id="Obj_Gradient_2"
-       xlink:href="#Gradient_2"
+       id="SpinColumn_Obj_Gradient_2"
+       xlink:href="#SpinColumn_Gradient_2"
        gradientTransform="matrix(-54.753302,-1.1101875,1.1101875,-54.753302,233.56827,158.55509)" />
     <linearGradient
        inkscape:collect="always"
-       xlink:href="#Gradient"
+       xlink:href="#SpinColumn_Gradient"
        id="linearGradient61395"
        gradientTransform="matrix(-144.33013,1.0849944,-1.0849944,-144.33013,279.16506,75.957503)" />
     <linearGradient
        inkscape:collect="always"
-       xlink:href="#Gradient_2"
+       xlink:href="#SpinColumn_Gradient_2"
        id="linearGradient61397"
        gradientTransform="matrix(-54.753302,-1.1101875,1.1101875,-54.753302,233.56827,158.55509)" />
     <linearGradient
        inkscape:collect="always"
-       xlink:href="#Gradient"
+       xlink:href="#SpinColumn_Gradient"
        id="linearGradient61415"
        gradientTransform="matrix(-144.33013,1.0849944,-1.0849944,-144.33013,279.16506,75.957503)" />
     <linearGradient
        inkscape:collect="always"
-       xlink:href="#Gradient_2"
+       xlink:href="#SpinColumn_Gradient_2"
        id="linearGradient61417"
        gradientTransform="matrix(-54.753302,-1.1101875,1.1101875,-54.753302,233.56827,158.55509)" />
     <linearGradient
        inkscape:collect="always"
-       xlink:href="#Gradient_2"
+       xlink:href="#SpinColumn_Gradient_2"
        id="linearGradient61430"
        gradientTransform="matrix(-54.753302,-1.1101875,1.1101875,-54.753302,233.56827,158.55509)" />
     <linearGradient
        inkscape:collect="always"
-       xlink:href="#Gradient"
+       xlink:href="#SpinColumn_Gradient"
        id="linearGradient61432"
        gradientTransform="matrix(-144.33013,1.0849944,-1.0849944,-144.33013,279.16506,75.957503)" />
     <linearGradient
        inkscape:collect="always"
-       xlink:href="#Gradient_2"
+       xlink:href="#SpinColumn_Gradient_2"
        id="linearGradient61434"
        gradientTransform="matrix(-54.753302,-1.1101875,1.1101875,-54.753302,233.56827,158.55509)" />
     <linearGradient
        inkscape:collect="always"
-       xlink:href="#Gradient"
+       xlink:href="#SpinColumn_Gradient"
        id="linearGradient61436"
        gradientTransform="matrix(-144.33013,1.0849944,-1.0849944,-144.33013,279.16506,75.957503)" />
     <linearGradient
        inkscape:collect="always"
-       xlink:href="#Gradient"
+       xlink:href="#SpinColumn_Gradient"
        id="linearGradient61446"
        gradientTransform="matrix(-144.33013,1.0849944,-1.0849944,-144.33013,279.16506,75.957503)" />
     <linearGradient
        inkscape:collect="always"
-       xlink:href="#Gradient_2"
+       xlink:href="#SpinColumn_Gradient_2"
        id="linearGradient61448"
        gradientTransform="matrix(-54.753302,-1.1101875,1.1101875,-54.753302,233.56827,158.55509)" />
   </defs>

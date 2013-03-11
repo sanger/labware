@@ -125,7 +125,7 @@ define(['text!labware/../images/tube_final4.svg', 'text!labware/../images/waste_
         // Selects the svg element and changes the display property to show a liquid in the tube 
         this.container().find("svg #aliquot").css("display", "block");
         // Change the liquid colour to match the variation in type
-        this.container().find("svg #linearGradientAliquot").attr("xlink:href", "#Gradient_" + aliquotType);
+        this.container().find("svg #linearGradientAliquot").attr("xlink:href", "#Tube_Gradient_" + aliquotType);
     };
 
     return tubeView;
