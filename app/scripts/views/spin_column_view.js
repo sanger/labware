@@ -44,10 +44,10 @@ define(['text!labware/../images/spin_column.svg'], function (spinColumnSvg) {
 
         this.release();
 
-        if (this.model && this.model.hasOwnProperty('spin_columns')) {
-
-            // Store the spin column data from the json object in a hash with the uuid as a unique identifier
-            var newSpinColumn = this.model.spin_columns;
+//        if (this.model && this.model.hasOwnProperty('spin_columns')) {
+//
+//            // Store the spin column data from the json object in a hash with the uuid as a unique identifier
+//            var newSpinColumn = this.model.spin_columns;
 
             // Parse the SVG xml data for the spin column image
             var parser = new DOMParser();
@@ -58,7 +58,7 @@ define(['text!labware/../images/spin_column.svg'], function (spinColumnSvg) {
 
             // Append the svn image data the chosen section placeholder
             this.container().append(importedNode);
-        }
+//        }
 
         return this;
     };

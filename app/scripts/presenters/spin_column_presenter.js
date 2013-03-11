@@ -24,10 +24,10 @@ define(['labware/views/spin_column_view',
     'use strict';
 
     var spinColumnPresenter = function (owner, presenterFactory) {
-        var tmpUrl = "http://localhost:8080/spincolumn/";
+        var labType = "spinColumn";
         BasePresenter.call(this);
         this.presenterFactory = presenterFactory;
-        this.init(owner, View, tmpUrl);
+        this.init(owner, View, labType);
 
         return this;
     };

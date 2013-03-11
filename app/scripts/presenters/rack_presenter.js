@@ -23,10 +23,10 @@ define(['labware/views/rack_view',
     'use strict';
 
     var rackPresenter = function (owner, presenterFactory) {
-        var tmpUrl = "http://localhost:8080/rack/";
+        var labType = "rack";
         BasePresenter.call(this);
         this.presenterFactory = presenterFactory;
-        this.init(owner, View, tmpUrl);
+        this.init(owner, View, labType);
 
         return this;
     };
