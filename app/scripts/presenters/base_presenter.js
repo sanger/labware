@@ -16,7 +16,7 @@
  along with this program; if not, write to the Free Software
  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston MA  02110-1301 USA
  */
-define(['config','mapper/s2_root', 'mapper/s2_tube_resource', 'mapper/s2_resource_factory'], function (config, S2Root, s2Tube, S2Factory) {
+define(['config','mapper/s2_root', 'mapper/s2_tube_resource'], function (config, S2Root, s2Tube) {
 
   var basePresenter = function () {
     this.currentView = undefined;
