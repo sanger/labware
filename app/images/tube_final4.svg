@@ -564,7 +564,7 @@
      style="display:none"
      transform="translate(-12.11806,-13.961353)" />
   <text id="Text">
-     Volume:<tspan id="Volume_Text" x="180" y="60"/>
+     <tspan id="Volume_Text" x="180" y="60"/>
      <tspan id="Type_Text" x="180" y="90"/>
      <tspan id="Barcode_Text" x="180" y="120"/>
   </text>
