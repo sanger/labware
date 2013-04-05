@@ -44,17 +44,17 @@ define(['text!labware/../images/tube_final4.svg', 'text!labware/../images/waste_
         var volumeText = "-";
         var barcodeText = "N/A";
         var typeText = "-";
-        var uuidText = '-';
 
         this.drawTube(tubeSvg);
 
         if (this.model && this.model.hasOwnProperty('tube')) {
 
+        // Store the tube data from the json object
+          var newTube = this.model.tube;
 
-
-            // Store the tube data from the json object in a hash with the uuid as a unique identifier
-            var newTube = this.model.tube;
-            uuidText = newTube.uuid;
+          // Labels include the tube barcode and its uuid
+          var labels = newTube.labels;
+          barcodeText = labels.barcode.value;
 
             // If the tube has aliquots then display the tube as filled
             if (newTube.aliquots.length > 0) {
