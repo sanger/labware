@@ -1,4 +1,4 @@
-define(['text!labware/../images/spin_column.svg'], function (spinColumnSvg) {
+define(['text!labware/../images/spin_column2.svg'], function (spinColumnSvg) {
     'use strict';
 
     var spinColumnView = function (owner, jquerySelection) {
@@ -24,25 +24,23 @@ define(['text!labware/../images/spin_column.svg'], function (spinColumnSvg) {
      */
     spinColumnView.prototype.renderView = function () {
 
-        this.release();
+      var barcodeText = 'N/A';
 
-//        if (this.model && this.model.hasOwnProperty('spin_columns')) {
-//
-//            // Store the spin column data from the json object in a hash with the uuid as a unique identifier
-//            var newSpinColumn = this.model.spin_columns;
+      this.release();
+      // Append the svn image data the chosen section placeholder
+      this.container().append(spinColumnSvg);
 
-            // Parse the SVG xml data for the spin column image
-            var parser = new DOMParser();
-            var xmlDoc = parser.parseFromString(spinColumnSvg, "image/svg+xml");
+      if (this.model && this.model.hasOwnProperty('spin_column')) {
+        // Store the tube data from the json object
+        var newSc = this.model.spin_column;
 
-            // Store the xml data in an object
-            var importedNode = document.importNode(xmlDoc.documentElement, true);
+        // Labels include the tube barcode and its uuid
+        var labels = newSc.labels;
+        barcodeText = labels.barcode.value;
+        this.container().find("svg #Barcode_Text").text('Barcode: ' + barcodeText);
+      }
 
-            // Append the svn image data the chosen section placeholder
-            this.container().append(importedNode);
-//        }
-
-        return this;
+      return this;
     };
 
     /* Removes the image from the assigned view container
