@@ -1,4 +1,4 @@
-define(['text!labware/../images/tube_final4.svg', 'text!labware/../images/waste_tube.svg'], function (tubeSvg, wasteTubeSvg) {
+define(['text!labware/../images/tube_final5.svg', 'text!labware/../images/waste_tube.svg'], function (tubeSvg, wasteTubeSvg) {
     'use strict';
 
     var tubeView = function (owner, jquerySelection) {
@@ -49,7 +49,6 @@ define(['text!labware/../images/tube_final4.svg', 'text!labware/../images/waste_
             }
 
             // Set the detail text of the tube in question
-            //this.container().find("svg #ID_Text tspan").text(uuidText);
             this.container().find("svg #Volume_Text").text('Volume: ' + volumeText);
             this.container().find("svg #Barcode_Text").text('Barcode: ' + barcodeText);
             this.container().find("svg #Type_Text").text('Type: ' + typeText);
