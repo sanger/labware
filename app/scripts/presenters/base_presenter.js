@@ -48,9 +48,6 @@ define(['config','mapper/s2_root', 'mapper/s2_tube_resource'], function (config,
    */
   basePresenter.prototype.setupPresenter = function (inputModel, jquerySelection) {
     this.setupPlaceholder(jquerySelection);
-    this.setupView();
-    // this.renderView();
-
     this.updateModel(inputModel);
 
     return this;
@@ -70,8 +67,7 @@ define(['config','mapper/s2_root', 'mapper/s2_tube_resource'], function (config,
    */
   basePresenter.prototype.updateModel = function (inputModel) {
     this.model = inputModel;
-//    this.setupView();
-//    this.renderView();
+    this.setupView();
     this.owner.childDone(this, this.labwareType + ' rendered', inputModel);
 
     return this;
