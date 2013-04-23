@@ -387,6 +387,7 @@
        inkscape:collect="always"
        xlink:href="#Tube_Gradient_DNA"
        id="linearGradientAliquot"
+       class="aliquotGradientSelector"
        gradientTransform="matrix(28.3465,0,0,28.3465,141.732,124.0157)" />
   </defs>
   <g

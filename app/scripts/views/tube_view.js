@@ -59,7 +59,10 @@ define(['text!labware/../images/tube_final5.svg', 'text!labware/../images/waste_
 
     tubeView.prototype.drawTube = function(inputSvg) {
       this.release();
-      this.container().append(inputSvg);
+      var tmp = this.container().selector;
+      this.selectorString = tmp.replace(/[\s\(\)]/gi, '_') + '_#linearGradientAliquot';
+      var inputSvgStr = inputSvg.replace(/linearGradientAliquot/gi, this.selectorString);
+      this.container().append(inputSvgStr);
     };
 
     tubeView.prototype.drawWasteTube = function() {
@@ -96,7 +99,7 @@ define(['text!labware/../images/tube_final5.svg', 'text!labware/../images/waste_
         // Selects the svg element and changes the display property to show a liquid in the tube 
         this.container().find("svg #aliquot").css("display", "block");
         // Change the liquid colour to match the variation in type
-        this.container().find("svg #linearGradientAliquot").attr("xlink:href", "#Tube_Gradient_" + aliquotType);
+        this.container().find("svg .aliquotGradientSelector").attr("xlink:href", "#Tube_Gradient_" + aliquotType);
     };
 
     return tubeView;
