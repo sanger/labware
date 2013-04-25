@@ -12,103 +12,104 @@
  */
 function is_empty(obj) {
 
-    // Assume if it has a length property with a non-zero value
-    // that that property is correct.
-    if (obj.length && obj.length > 0)    return false;
-    if (obj.length && obj.length === 0)  return true;
+  // Assume if it has a length property with a non-zero value
+  // that that property is correct.
+  if (obj.length && obj.length > 0)    return false;
+  if (obj.length && obj.length === 0)  return true;
 
-    for (var key in obj) {
-        if (hasOwnProperty.call(obj, key))    return false;
-    }
+  for (var key in obj) {
+    if (hasOwnProperty.call(obj, key))    return false;
+  }
 
-    return true;
+  return true;
 }
 
 define(['text!labware/../images/rack.svg'], function (rackSvg) {
-    'use strict';
+  'use strict';
 
-    var rackView = function (owner, jquerySelection) {
-        this.owner = owner;
-        this.container = jquerySelection;
-        this.model = undefined;
+  var rackView = function (owner, jquerySelection) {
+    this.owner = owner;
+    this.container = jquerySelection;
+    this.model = undefined;
 
-        return this;
-    };
+    return this;
+  };
 
 
-    /* Draws the plate in the given container space
-     *
-     *
-     * Arguments
-     * ---------
-     * data:    The spin column data object
-     *
-     *
-     * Returns
-     * -------
-     * The spin column uuid
-     */
-    rackView.prototype.renderView = function () {
+  /* Draws the plate in the given container space
+   *
+   *
+   * Arguments
+   * ---------
+   * data:    The spin column data object
+   *
+   *
+   * Returns
+   * -------
+   * The spin column uuid
+   */
+  rackView.prototype.renderView = function () {
 
-        this.release();
+    this.release();
+    this.drawRack(rackSvg);
 
-        if (this.model && this.model.hasOwnProperty('tube_rack')) {
+    if (this.model && this.model.hasOwnProperty('tube_rack')) {
 
-            // Store the spin column data from the json object in a hash with the uuid as a unique identifier
-            var newRack = this.model.tube_rack;
+      // Store the spin column data from the json object in a hash with the uuid as a unique identifier
+      var newRack = this.model.tube_rack;
+      for (var well in newRack.tubes) {
+        this.fillWell(well);
+      }
+    }
 
-            // Parse the SVG xml data for the spin column image
-            var parser = new DOMParser();
-            var xmlDoc = parser.parseFromString(rackSvg, "image/svg+xml");
+    return this;
+  };
 
-            // Store the xml data in an object
-            var importedNode = document.importNode(xmlDoc.documentElement, true);
+  rackView.prototype.drawRack = function(inputSvg) {
+    this.release();
+    var parser = new DOMParser();
+    var xmlDoc = parser.parseFromString(inputSvg, "image/svg+xml");
 
-            // Append the svn image data the chosen section placeholder
-            this.container().append(importedNode);
+    // Store the xml data in an object
+    var importedNode = document.importNode(xmlDoc.documentElement, true);
 
-            // If the plate wells have aliquots then display the plate as filled
-            for (var well in newRack.tubes) {
-                this.fillWell(well);
-            }
-        }
+    // Append the svn image data the chosen section placeholder
+    this.container().append(importedNode);
+  };
 
-        return this;
-    };
+  /* Removes the image from the assigned view container
+   *
+   *
+   * Arguments
+   * ---------
+   *
+   *
+   * Returns
+   * -------
+   * this
+   */
+  rackView.prototype.release = function () {
+    this.container().empty();
+  };
 
-    /* Removes the image from the assigned view container
-     *
-     *
-     * Arguments
-     * ---------
-     * 
-     * 
-     * Returns
-     * -------
-     * this
-     */
-    rackView.prototype.release = function () {
-        this.container().empty();
-    };
+  /* Modifies the plate well in the defined HTML section container to display as full
+   *
+   *
+   * Arguments
+   * ---------
+   * container:    The selected d3 element
+   *
+   *
+   * Returns
+   * -------
+   * void
+   */
+  rackView.prototype.fillWell = function (well) {
 
-    /* Modifies the plate well in the defined HTML section container to display as full
-     *
-     *
-     * Arguments
-     * ---------
-     * container:    The selected d3 element
-     * 
-     * 
-     * Returns
-     * -------
-     * void
-     */
-    rackView.prototype.fillWell = function (well) {
-    
-        // Selects the svg element and changes the display property to show a liquid in the well 
-        this.container().find("svg #" + well).css("fill", "lime");
-    };
+    // Selects the svg element and changes the display property to show a liquid in the well
+    this.container().find("svg #" + well).css("fill", "lime");
+  };
 
-    return rackView;
+  return rackView;
 
 });
