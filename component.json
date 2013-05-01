@@ -7,7 +7,6 @@
     "d3": "~3.0.6",
     "requirejs-text": "~2.0.5",
     "requirejs-domready": "~2.0.1",
-    "requirejs": "~2.1.4",
-    "S2Mapper": "https://github.com/sanger/S2Mapper.git"
+    "requirejs": "~2.1.4"
   }
 }

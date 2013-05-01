@@ -169,9 +169,9 @@ module.exports = function( grunt ) {
     rjs: {
       // no minification, is done by the min task
       optimize: 'none',
-      baseUrl: './scripts',
+      baseUrl: '.',
       wrap: true,
-      name: 'main'
+      name: 'main/scripts'
     },
 
     // While Yeoman handles concat/min when using

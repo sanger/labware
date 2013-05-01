@@ -58,9 +58,8 @@ define(['presenters/centrifuge_presenter'], function (CentrifugePresenter) {
       beforeEach(function () {
         configureMockOwner();
         presenter = new CentrifugePresenter(owner);
-//        configureSpyView();
         presenter.View = View;
-        spyOn(presenter, 'renderView');
+        spyOn(presenter, 'setupView');
         presenter.updateModel(true);
 
       });
@@ -68,7 +67,7 @@ define(['presenters/centrifuge_presenter'], function (CentrifugePresenter) {
         expect(presenter.model).toBe(true);
       });
       it('Render view has been called', function () {
-        expect(presenter.renderView).toHaveBeenCalled();
+        expect(presenter.setupView).toHaveBeenCalled();
       });
     });
 

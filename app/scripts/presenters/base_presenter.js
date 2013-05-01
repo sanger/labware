@@ -1,4 +1,4 @@
-define(['config','mapper/s2_root', 'mapper/s2_tube_resource'], function (config, S2Root, s2Tube) {
+define([], function () {
   'use strict';
 
   var basePresenter = function () {
