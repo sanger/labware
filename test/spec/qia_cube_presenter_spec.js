@@ -58,9 +58,8 @@ define(['presenters/qia_cube_presenter'], function (QiaCubePresenter) {
       beforeEach(function () {
         configureMockOwner();
         presenter = new QiaCubePresenter(owner);
-//        configureSpyView();
         presenter.View = View;
-        spyOn(presenter, 'renderView');
+        spyOn(presenter, 'setupView');
         presenter.updateModel(true);
 
       });
@@ -68,7 +67,7 @@ define(['presenters/qia_cube_presenter'], function (QiaCubePresenter) {
         expect(presenter.model).toBe(true);
       });
       it('Render view has been called', function () {
-        expect(presenter.renderView).toHaveBeenCalled();
+        expect(presenter.setupView).toHaveBeenCalled();
       });
     });
 

@@ -1,9 +1,40 @@
-define(['presenters/tube_presenter'], function (TubePresenter) {
+define(['presenters/tube_presenter',
+  'text!json_data/tube.json',
+  'text!json_data/tube_empty.json']
+  , function (TubePresenter, tubeJson, tubeEmptyJson) {
   'use strict';
 
   var view = undefined;
   var presenter = undefined;
   var owner = undefined;
+
+  function drawSampleTubes(tube, container1, container2) {
+    var tubeData = JSON.parse(tubeJson);
+    var tubeEmptyData = JSON.parse(tubeEmptyJson);
+
+    tube.setupPresenter(tubeJson, container1);
+
+    return tube;
+  }
+
+  function drawWasteTube(tube, jquerySelection) {
+    tube.setupPlaceholder(jquerySelection);
+    tube.setupView();
+    tube.currentView.drawWasteTube();
+  }
+
+  function getAliquotType(tube) {
+    var type = '';
+
+    if (tube.model && tube.model.hasOwnProperty('tube')) {
+      if (tube.model.tube.aliquots.length > 0) {
+        type = tube.model.tube.aliquots[0].type;
+      }
+    }
+
+    return type;
+  }
+
 
   function configureMockOwner() {
     owner = {};
@@ -54,10 +85,8 @@ define(['presenters/tube_presenter'], function (TubePresenter) {
       beforeEach(function () {
         configureMockOwner();
         presenter = new TubePresenter(owner);
-//        configureSpyView();
-//        presenter.currentView = view;
         presenter.View = View;
-        spyOn(presenter, 'renderView');
+        spyOn(presenter, 'setupView');
         presenter.updateModel(true);
 
       });
@@ -65,7 +94,7 @@ define(['presenters/tube_presenter'], function (TubePresenter) {
         expect(presenter.model).toBe(true);
       });
       it('Render view has been called', function () {
-        expect(presenter.renderView).toHaveBeenCalled();
+        expect(presenter.setupView).toHaveBeenCalled();
       });
     });
 

@@ -1,5 +1,14 @@
-define(['presenters/rack_presenter'], function (RackPresenter) {
+define(['presenters/rack_presenter',
+  'text!json_data/tube_rack.json'], function (RackPresenter, rackJson) {
   'use strict';
+
+  var drawSampleRack = function (rack, container) {
+    var rackData = JSON.parse(rackJson);
+
+    rack.setupPresenter(rackData, container);
+
+    return this;
+  };
 
   var view = undefined;
   var presenter = undefined;
@@ -55,13 +64,12 @@ define(['presenters/rack_presenter'], function (RackPresenter) {
       beforeEach(function () {
         configureMockOwner();
         presenter = new RackPresenter(owner);
-//        configureSpyView();
         presenter.View = View;
-        spyOn(presenter, 'renderView');
+        spyOn(presenter, 'setupView');
         presenter.updateModel(true);
       });
       it('Render view has been called', function () {
-        expect(presenter.renderView).toHaveBeenCalled();
+        expect(presenter.setupView).toHaveBeenCalled();
       });
     });
 

@@ -6,16 +6,13 @@ require.config({
   paths: {
     d3: 'components/d3',
     domReady: 'components/requirejs-domready/domReady',
-    mapper: 'scripts/mapper',
     views: 'scripts/views',
-    json_data: 'scripts/json_data',
     presenters: 'scripts/presenters',
     images: 'images',
     config: 'test_config',
     text: 'components/requirejs-text/text',
-    mapper:'/components/S2Mapper/app/scripts/mapper',
     spec: 'spec',
-    json: 'json',
+    json_data: 'json_data',
     labware:'scripts'
   }
 

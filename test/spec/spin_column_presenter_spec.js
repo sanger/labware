@@ -1,5 +1,15 @@
-define(['presenters/spin_column_presenter'], function (SpinColumnPresenter) {
+define(['presenters/spin_column_presenter',
+  'text!json_data/spin_column.json'
+], function (SpinColumnPresenter, spinColumnJson) {
   'use strict';
+
+  var drawSampleSpinColumn = function (spinColumn, container) {
+    var spinColumnData = JSON.parse(spinColumnJson);
+
+    spinColumn.setupPresenter(spinColumnData, container);
+
+    return this;
+  };
 
   var view = undefined;
   var presenter = undefined;
@@ -54,9 +64,8 @@ define(['presenters/spin_column_presenter'], function (SpinColumnPresenter) {
       beforeEach(function () {
         configureMockOwner();
         presenter = new SpinColumnPresenter(owner);
-//        configureSpyView();
         presenter.View = View;
-        spyOn(presenter, 'renderView');
+        spyOn(presenter, 'setupView');
         presenter.updateModel(true);
 
       });
@@ -64,7 +73,7 @@ define(['presenters/spin_column_presenter'], function (SpinColumnPresenter) {
         expect(presenter.model).toBe(true);
       });
       it('Render view has been called', function () {
-        expect(presenter.renderView).toHaveBeenCalled();
+        expect(presenter.setupView).toHaveBeenCalled();
       });
     });
 
