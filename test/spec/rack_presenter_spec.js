@@ -64,13 +64,12 @@ define(['presenters/rack_presenter',
       beforeEach(function () {
         configureMockOwner();
         presenter = new RackPresenter(owner);
-//        configureSpyView();
         presenter.View = View;
-        spyOn(presenter, 'renderView');
+        spyOn(presenter, 'setupView');
         presenter.updateModel(true);
       });
       it('Render view has been called', function () {
-        expect(presenter.renderView).toHaveBeenCalled();
+        expect(presenter.setupView).toHaveBeenCalled();
       });
     });
 

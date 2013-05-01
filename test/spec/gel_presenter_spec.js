@@ -64,9 +64,8 @@ define(['presenters/gel_presenter',
       beforeEach(function () {
         configureMockOwner();
         presenter = new GelPresenter(owner);
-//        configureSpyView();
         presenter.View = View;
-        spyOn(presenter, 'renderView');
+        spyOn(presenter, 'setupView');
         presenter.updateModel(true);
 
       });
@@ -74,7 +73,7 @@ define(['presenters/gel_presenter',
         expect(presenter.model).toBe(true);
       });
       it('Render view has been called', function () {
-        expect(presenter.renderView).toHaveBeenCalled();
+        expect(presenter.setupView).toHaveBeenCalled();
       });
     });
 

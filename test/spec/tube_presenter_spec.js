@@ -85,10 +85,8 @@ define(['presenters/tube_presenter',
       beforeEach(function () {
         configureMockOwner();
         presenter = new TubePresenter(owner);
-//        configureSpyView();
-//        presenter.currentView = view;
         presenter.View = View;
-        spyOn(presenter, 'renderView');
+        spyOn(presenter, 'setupView');
         presenter.updateModel(true);
 
       });
@@ -96,7 +94,7 @@ define(['presenters/tube_presenter',
         expect(presenter.model).toBe(true);
       });
       it('Render view has been called', function () {
-        expect(presenter.renderView).toHaveBeenCalled();
+        expect(presenter.setupView).toHaveBeenCalled();
       });
     });
 
