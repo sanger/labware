@@ -1,5 +1,15 @@
-define(['presenters/spin_column_presenter'], function (SpinColumnPresenter) {
+define(['presenters/spin_column_presenter',
+  'text!json_data/spin_column.json'
+], function (SpinColumnPresenter, spinColumnJson) {
   'use strict';
+
+  var drawSampleSpinColumn = function (spinColumn, container) {
+    var spinColumnData = JSON.parse(spinColumnJson);
+
+    spinColumn.setupPresenter(spinColumnData, container);
+
+    return this;
+  };
 
   var view = undefined;
   var presenter = undefined;

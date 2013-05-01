@@ -1,5 +1,17 @@
-define(['presenters/plate_presenter'], function (PlatePresenter) {
+define(['presenters/plate_presenter',
+  'text!json_data/plate96_2.json',
+  'text!json_data/plate384_1.json'], function (PlatePresenter, plate96Json, plate384Json) {
   'use strict';
+
+  var drawSamplePlate = function (plate, container1, container2) {
+    var plate96Data = JSON.parse(plate96Json);
+    var plate384Data = JSON.parse(plate384Json);
+
+    plate.setupPresenter(plate96Data, container1);
+
+    return plate;
+  };
+
 
   var view = undefined;
   var presenter = undefined;

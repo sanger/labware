@@ -15,7 +15,7 @@ require.config({
     text: 'components/requirejs-text/text',
     mapper:'/components/S2Mapper/app/scripts/mapper',
     spec: 'spec',
-    json: 'json',
+    json_data: 'json_data',
     labware:'scripts'
   }
 

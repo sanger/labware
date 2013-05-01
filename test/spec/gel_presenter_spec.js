@@ -1,5 +1,15 @@
-define(['presenters/gel_presenter'], function (GelPresenter) {
+define(['presenters/gel_presenter',
+  'text!json_data/gel_plate.json'], function (GelPresenter, gelJson) {
   'use strict';
+
+  var drawSampleGel = function (gelPlate, container) {
+    var gelData = JSON.parse(gelJson);
+
+    gelPlate.setupPresenter(gelData, container);
+
+    return this;
+  };
+
 
   var view = undefined;
   var presenter = undefined;
