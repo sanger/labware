@@ -57,9 +57,12 @@ define(['text!labware/../images/rack.svg'], function (rackSvg) {
 
       // Store the spin column data from the json object in a hash with the uuid as a unique identifier
       var newRack = this.model.tube_rack;
+      var labels = newRack.labels;
       for (var well in newRack.tubes) {
         this.fillWell(well);
       }
+
+      this.container().find("svg #Barcode_Text").text('Barcode: ' + labels.barcode.value);
     }
 
     return this;
@@ -104,10 +107,15 @@ define(['text!labware/../images/rack.svg'], function (rackSvg) {
    * -------
    * void
    */
-  rackView.prototype.fillWell = function (well) {
+  rackView.prototype.fillWell = function (well, colour) {
 
     // Selects the svg element and changes the display property to show a liquid in the well
-    this.container().find("svg #" + well).css("fill", "lime");
+    this.container().find("svg #" + well).css("fill", colour || "lime");
+  };
+
+  rackView.prototype.resetWells = function () {
+    this.container().find("svg ellipse").css("fill", "black");
+    return this;
   };
 
   return rackView;
