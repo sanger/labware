@@ -1,29 +1,3 @@
-/* Helper function which determines whether an object is empty
- *
- *
- * Arguments
- * ---------
- * obj: The object to be examined
- *
- *
- * Returns
- * -------
- * whether the object is empty or not (bool)
- */
-function is_empty(obj) {
-
-  // Assume if it has a length property with a non-zero value
-  // that that property is correct.
-  if (obj.length && obj.length > 0)    return false;
-  if (obj.length && obj.length === 0)  return true;
-
-  for (var key in obj) {
-    if (hasOwnProperty.call(obj, key))    return false;
-  }
-
-  return true;
-}
-
 define(['text!labware/../images/rack.svg'], function (rackSvg) {
   'use strict';
 
@@ -36,18 +10,6 @@ define(['text!labware/../images/rack.svg'], function (rackSvg) {
   };
 
 
-  /* Draws the plate in the given container space
-   *
-   *
-   * Arguments
-   * ---------
-   * data:    The spin column data object
-   *
-   *
-   * Returns
-   * -------
-   * The spin column uuid
-   */
   rackView.prototype.renderView = function () {
 
     this.release();
@@ -57,12 +19,12 @@ define(['text!labware/../images/rack.svg'], function (rackSvg) {
 
       // Store the spin column data from the json object in a hash with the uuid as a unique identifier
       var newRack = this.model.tube_rack;
-      var labels = newRack.labels;
+      var ean13 = newRack.labels && newRack.labels.barcode.value;
       for (var well in newRack.tubes) {
         this.fillWell(well);
       }
 
-      this.container().find("svg #Barcode_Text").text('Barcode: ' + labels.barcode.value);
+      this.container().find("svg #Barcode_Text").text('Barcode: ' + ean13 || '');
     }
 
     return this;
@@ -80,17 +42,6 @@ define(['text!labware/../images/rack.svg'], function (rackSvg) {
     this.container().append(importedNode);
   };
 
-  /* Removes the image from the assigned view container
-   *
-   *
-   * Arguments
-   * ---------
-   *
-   *
-   * Returns
-   * -------
-   * this
-   */
   rackView.prototype.release = function () {
     this.container().empty();
   };
