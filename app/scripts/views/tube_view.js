@@ -36,7 +36,7 @@ define(['text!labware/../images/tube_final5.svg', 'text!labware/../images/waste_
     }
 
     // Set the detail text of the tube in question
-    this.container().find("svg #Volume_Text").text('Volume: ' + volumeText);
+    this.container().find("svg #Volume_Text").text('Quantity: ' + volumeText);
     this.container().find("svg #Barcode_Text").text('Barcode: ' + barcodeText);
   }
 
