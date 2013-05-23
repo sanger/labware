@@ -1,26 +1,27 @@
-define(['labware/views/rack_view',
-    'labware/presenters/base_presenter'],
-    function (View,  BasePresenter) {
-    'use strict';
+define([
+       'labware/views/rack_view',
+       'labware/presenters/base_presenter'
+], function (View,  BasePresenter) {
+  'use strict';
 
-    var rackPresenter = function (owner, presenterFactory) {
-        var labType = "rack";
-        BasePresenter.call(this);
-        this.presenterFactory = presenterFactory;
-        this.init(owner, View, labType);
+  var RackPresenter = function (owner, presenterFactory) {
+    var labType = "rack";
+    BasePresenter.call(this);
+    this.presenterFactory = presenterFactory;
+    this.init(owner, View, labType);
 
-        return this;
-    };
+    return this;
+  };
 
-    rackPresenter.prototype.fillWell = function (well, colour){
-      this.currentView.fillWell(well,colour);
-    };
+  RackPresenter.prototype = new BasePresenter();
 
-    rackPresenter.prototype.resetWells = function (){
-      this.currentView.resetWells();
-    };
+  RackPresenter.prototype.fillWell = function (well, colour){
+    this.currentView.fillWell(well,colour);
+  };
 
-    rackPresenter.prototype = new BasePresenter();
+  RackPresenter.prototype.resetWells = function (){
+    this.currentView.resetWells();
+  };
 
-    return rackPresenter;
+  return RackPresenter;
 });
