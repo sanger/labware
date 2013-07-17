@@ -46,18 +46,6 @@ define(['text!labware/../images/rack.svg'], function (rackSvg) {
     this.container().empty();
   };
 
-  /* Modifies the plate well in the defined HTML section container to display as full
-   *
-   *
-   * Arguments
-   * ---------
-   * container:    The selected d3 element
-   *
-   *
-   * Returns
-   * -------
-   * void
-   */
   rackView.prototype.fillWell = function (well, colour) {
 
     // Selects the svg element and changes the display property to show a liquid in the well

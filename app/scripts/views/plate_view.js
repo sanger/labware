@@ -100,18 +100,6 @@ define(['text!labware/../images/96_plate.svg', 'text!labware/../images/384_plate
         return count;
     };
 
-    /* Modifies the plate well in the defined HTML section container to display as full
-     *
-     *
-     * Arguments
-     * ---------
-     * container:    The selected d3 element
-     * 
-     * 
-     * Returns
-     * -------
-     * void
-     */
     plateView.prototype.fillWell = function (well) {
     
         // Selects the svg element and changes the display property to show a liquid in the well 
