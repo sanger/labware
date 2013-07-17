@@ -4,7 +4,6 @@ require.config({
 
   baseUrl: '.',
   paths: {
-    d3: 'components/d3',
     domReady: 'components/requirejs-domready/domReady',
     views: 'scripts/views',
     presenters: 'scripts/presenters',
