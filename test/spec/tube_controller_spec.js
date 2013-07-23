@@ -1,18 +1,18 @@
-define(['presenters/tube_presenter',
+define(['controllers/tube_controller',
   'text!json_data/tube.json',
   'text!json_data/tube_empty.json']
-  , function (TubePresenter, tubeJson, tubeEmptyJson) {
+  , function (TubeController, tubeJson, tubeEmptyJson) {
   'use strict';
 
   var view = undefined;
-  var presenter = undefined;
+  var controller = undefined;
   var owner = undefined;
 
   function drawSampleTubes(tube, container1, container2) {
     var tubeData = JSON.parse(tubeJson);
     var tubeEmptyData = JSON.parse(tubeEmptyJson);
 
-    tube.setupPresenter(tubeJson, container1);
+    tube.setupController(tubeJson, container1);
 
     return tube;
   }
@@ -68,68 +68,68 @@ define(['presenters/tube_presenter',
   View.prototype.renderView = function () {
   };
 
-  describe("TubePresenter", function () {
+  describe("TubeController", function () {
     describe("default constructor", function () {
       beforeEach(function () {
-        presenter = new TubePresenter();
+        controller = new TubeController();
       });
       it('instantiates tubes object', function () {
-        expect(presenter).toBeDefined();
+        expect(controller).toBeDefined();
       });
       it('is of type tube', function () {
-        expect(presenter instanceof TubePresenter).toBeTruthy();
+        expect(controller instanceof TubeController).toBeTruthy();
       });
     });
 
     describe("UpdateModel", function () {
       beforeEach(function () {
         configureMockOwner();
-        presenter = new TubePresenter(owner);
-        presenter.View = View;
-        spyOn(presenter, 'setupView');
-        presenter.updateModel(true);
+        controller = new TubeController(owner);
+        controller.View = View;
+        spyOn(controller, 'setupView');
+        controller.updateModel(true);
 
       });
       it('Model is properly set', function () {
-        expect(presenter.model).toBe(true);
+        expect(controller.model).toBe(true);
       });
       it('Render view has been called', function () {
-        expect(presenter.setupView).toHaveBeenCalled();
+        expect(controller.setupView).toHaveBeenCalled();
       });
     });
 
     describe("Setup Placeholder", function () {
       beforeEach(function () {
-        presenter = new TubePresenter();
-        presenter.setupPlaceholder(true);
+        controller = new TubeController();
+        controller.setupPlaceholder(true);
       });
       it('View is properly set', function () {
-        expect(presenter.jquerySelection).toBeDefined();
+        expect(controller.jquerySelection).toBeDefined();
       });
     });
 
     describe("Setup View", function () {
       beforeEach(function () {
-        presenter = new TubePresenter();
-        presenter.setupView(true);
+        controller = new TubeController();
+        controller.setupView(true);
       });
       it('View is properly set', function () {
-        expect(presenter.currentView).toBeDefined();
+        expect(controller.currentView).toBeDefined();
       });
     });
 
     describe("View interaction", function () {
       beforeEach(function () {
         configureSpyView();
-        presenter = new TubePresenter();
-        presenter.currentView = view;
+        controller = new TubeController();
+        controller.currentView = view;
       });
       it('Renders tubes in the view', function () {
-        presenter.renderView();
+        controller.renderView();
         expect(view.renderView).toHaveBeenCalled();
       });
       it('Releases the view as expected', function () {
-        presenter.release();
+        controller.release();
         expect(view.release).toHaveBeenCalled();
       });
     });

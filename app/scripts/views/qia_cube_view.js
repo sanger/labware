@@ -135,10 +135,10 @@ define(['text!labware/../images/qia_cube.svg'], function (qiaCubeSvg) {
 
         listContainer.val(selectedOption);
 
-        // Hook the select object to the presenter object
-        // NOTE: Presenter defines the qiaPresenter object in the window on construction
+        // Hook the select object to the controller object
+        // NOTE: Controller defines the qiaController object in the window on construction
         listContainer.change(function () {
-            window.qiaPresenter.displayTubes($(this).val());
+            window.qiaController.displayTubes($(this).val());
         });
 
         return this;

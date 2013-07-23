@@ -137,10 +137,10 @@ define(['text!labware/../images/centrifuge.svg'], function (centrifugeSvg) {
 
         listContainer.val(selectedOption);
 
-        // Hook the select object to the presenter object
-        // NOTE: Presenter defines the contrifugePresenter object in the window on construction
+        // Hook the select object to the controller object
+        // NOTE: Controller defines the contrifugeController object in the window on construction
         listContainer.change(function () {
-            window.centrifugePresenter.displayTubes($(this).val());
+            window.centrifugeController.displayTubes($(this).val());
         });
 
         return this;

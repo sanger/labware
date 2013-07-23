@@ -1,21 +1,21 @@
 define(['labware/views/centrifuge_view',
-    'labware/presenters/base_presenter'],
-    function (View, BasePresenter) {
+    'labware/controllers/base_controller'],
+    function (View, BaseController) {
     'use strict';
 
-    var centrifugePresenter = function (owner, presenterFactory) {
+    var centrifugeController = function (owner, controllerFactory) {
         var labType = "centrifuge";
-        BasePresenter.call(this);
-        this.presenterFactory = presenterFactory;
+        BaseController.call(this);
+        this.controllerFactory = controllerFactory;
         this.init(owner, View, labType);
-        window.centrifugePresenter = this;
+        window.centrifugeController = this;
 
         return this;
     };
 
-    centrifugePresenter.prototype = new BasePresenter();
+    centrifugeController.prototype = new BaseController();
 
-    /* Sets up the presenter
+    /* Sets up the controller
      *
      *
      * Arguments
@@ -27,7 +27,7 @@ define(['labware/views/centrifuge_view',
      * -------
      * this
      */
-    centrifugePresenter.prototype.setupPresenter = function (jquerySelection) {
+    centrifugeController.prototype.setupController = function (jquerySelection) {
         this.setupPlaceholder(jquerySelection);
         this.setupView();
         this.renderView();
@@ -48,7 +48,7 @@ define(['labware/views/centrifuge_view',
      * -------
      * this
      */
-    centrifugePresenter.prototype.renderView = function () {
+    centrifugeController.prototype.renderView = function () {
 
         // Pass the update call down to the view
         this.currentView.renderView();
@@ -69,7 +69,7 @@ define(['labware/views/centrifuge_view',
      * -------
      * this
      */
-    centrifugePresenter.prototype.initTubesList = function (listContainer) {
+    centrifugeController.prototype.initTubesList = function (listContainer) {
         this.currentView.initTubesList(listContainer);
 
         return this;
@@ -87,7 +87,7 @@ define(['labware/views/centrifuge_view',
      * -------
      * this
      */
-    centrifugePresenter.prototype.displayTubes = function (tubesString) {
+    centrifugeController.prototype.displayTubes = function (tubesString) {
 
         var numTubes = parseInt(tubesString, 10);
 
@@ -131,5 +131,5 @@ define(['labware/views/centrifuge_view',
         return this;
     };
 
-    return centrifugePresenter;
+    return centrifugeController;
 });

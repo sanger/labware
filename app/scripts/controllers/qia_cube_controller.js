@@ -1,21 +1,21 @@
 define(['labware/views/qia_cube_view',
-    'labware/presenters/base_presenter'],
-    function (View, BasePresenter) {
+    'labware/controllers/base_controller'],
+    function (View, BaseController) {
     'use strict';
 
-    var qiaCubePresenter = function (owner, presenterFactory) {
+    var qiaCubeController = function (owner, controllerFactory) {
         var labType = "qiaQube";
-        BasePresenter.call(this);
-        this.presenterFactory = presenterFactory;
+        BaseController.call(this);
+        this.controllerFactory = controllerFactory;
         this.init(owner, View, labType);
-        window.qiaPresenter = this;
+        window.qiaController = this;
 
         return this;
     };
 
-    qiaCubePresenter.prototype = new BasePresenter();
+    qiaCubeController.prototype = new BaseController();
 
-    /* Sets up the presenter
+    /* Sets up the controller
      *
      *
      * Arguments
@@ -27,7 +27,7 @@ define(['labware/views/qia_cube_view',
      * -------
      * this
      */
-    qiaCubePresenter.prototype.setupPresenter = function (jquerySelection) {
+    qiaCubeController.prototype.setupController = function (jquerySelection) {
         this.setupPlaceholder(jquerySelection);
         this.setupView();
         this.renderView();
@@ -47,7 +47,7 @@ define(['labware/views/qia_cube_view',
      * -------
      * this
      */
-    qiaCubePresenter.prototype.renderView = function () {
+    qiaCubeController.prototype.renderView = function () {
         // Pass the update call down to the view
         this.currentView.renderView();
 
@@ -67,7 +67,7 @@ define(['labware/views/qia_cube_view',
      * -------
      * this
      */
-    qiaCubePresenter.prototype.initTubesList = function (listContainer) {
+    qiaCubeController.prototype.initTubesList = function (listContainer) {
         this.currentView.initTubesList(listContainer);
 
         return this;
@@ -85,7 +85,7 @@ define(['labware/views/qia_cube_view',
      * -------
      * this
      */
-    qiaCubePresenter.prototype.displayTubes = function (tubesString) {
+    qiaCubeController.prototype.displayTubes = function (tubesString) {
 
         var numTubes = parseInt(tubesString, 10);
         var tubesConfiguration = this.getTubeConfigurations(numTubes);
@@ -107,7 +107,7 @@ define(['labware/views/qia_cube_view',
      * -------
      * The tube configuration
      */
-    qiaCubePresenter.prototype.getTubeConfigurations = function (numTubes) {
+    qiaCubeController.prototype.getTubeConfigurations = function (numTubes) {
         var tubesConfiguration = [];
 
         switch (numTubes) {
@@ -150,5 +150,5 @@ define(['labware/views/qia_cube_view',
         return tubesConfiguration;
     };
 
-    return qiaCubePresenter;
+    return qiaCubeController;
 });

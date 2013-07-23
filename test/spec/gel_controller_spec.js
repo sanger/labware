@@ -1,17 +1,18 @@
-define(['presenters/rack_presenter',
-  'text!json_data/tube_rack.json'], function (RackPresenter, rackJson) {
+define(['controllers/gel_controller',
+  'text!json_data/gel_plate.json'], function (GelController, gelJson) {
   'use strict';
 
-  var drawSampleRack = function (rack, container) {
-    var rackData = JSON.parse(rackJson);
+  var drawSampleGel = function (gelPlate, container) {
+    var gelData = JSON.parse(gelJson);
 
-    rack.setupPresenter(rackData, container);
+    gelPlate.setupController(gelData, container);
 
     return this;
   };
 
+
   var view = undefined;
-  var presenter = undefined;
+  var controller = undefined;
   var owner = undefined;
 
   function configureSpyView() {
@@ -25,7 +26,6 @@ define(['presenters/rack_presenter',
 
     spyOn(view, 'release');
     spyOn(view, 'renderView');
-    spyOn($, 'ajax');
   }
 
   function View() {
@@ -47,64 +47,68 @@ define(['presenters/rack_presenter',
     spyOn(owner, 'childDone');
   }
 
-  describe("RackPresenter", function () {
+  describe("GelController", function () {
     describe("default constructor", function () {
       beforeEach(function () {
-        presenter = new RackPresenter();
+        controller = new GelController();
       });
-      it('instantiates tube racks object', function () {
-        expect(presenter).toBeDefined();
+      it('instantiates gels object', function () {
+        expect(controller).toBeDefined();
       });
-      it('is of type tube rack', function () {
-        expect(presenter instanceof RackPresenter).toBeTruthy();
+      it('is of type gel', function () {
+        expect(controller instanceof GelController).toBeTruthy();
       });
     });
 
     describe("UpdateModel", function () {
       beforeEach(function () {
         configureMockOwner();
-        presenter = new RackPresenter(owner);
-        presenter.View = View;
-        spyOn(presenter, 'setupView');
-        presenter.updateModel(true);
+        controller = new GelController(owner);
+        controller.View = View;
+        spyOn(controller, 'setupView');
+        controller.updateModel(true);
+
+      });
+      it('Model is properly set', function () {
+        expect(controller.model).toBe(true);
       });
       it('Render view has been called', function () {
-        expect(presenter.setupView).toHaveBeenCalled();
+        expect(controller.setupView).toHaveBeenCalled();
       });
     });
 
     describe("Setup Placeholder", function () {
       beforeEach(function () {
-        presenter = new RackPresenter();
-        presenter.setupPlaceholder(true);
+        controller = new GelController();
+        controller.setupPlaceholder(true);
       });
       it('View is properly set', function () {
-        expect(presenter.jquerySelection).toBeDefined();
+        expect(controller.jquerySelection).toBeDefined();
       });
     });
 
     describe("Setup View", function () {
       beforeEach(function () {
-        presenter = new RackPresenter();
-        presenter.setupView(true);
+        controller = new GelController();
+        controller.setupView(true);
       });
       it('View is properly set', function () {
-        expect(presenter.currentView).toBeDefined();
+        expect(controller.currentView).toBeDefined();
       });
     });
 
     describe("View interaction", function () {
       beforeEach(function () {
         configureSpyView();
-        presenter = new RackPresenter();
-        presenter.currentView = view;
+        controller = new GelController();
+        controller.currentView = view;
       });
-      it('Renders tube racks in the view', function () {
-        presenter.renderView();
+      it('Renders gels in the view', function () {
+        controller.renderView();
         expect(view.renderView).toHaveBeenCalled();
       });
       it('Releases the view as expected', function () {
-        presenter.release();
+        controller.release();
         expect(view.release).toHaveBeenCalled();
       });
     });

@@ -1,20 +1,18 @@
-define(['presenters/plate_presenter',
-  'text!json_data/plate96_2.json',
-  'text!json_data/plate384_1.json'], function (PlatePresenter, plate96Json, plate384Json) {
+define(['controllers/spin_column_controller',
+  'text!json_data/spin_column.json'
+], function (SpinColumnController, spinColumnJson) {
   'use strict';
 
-  var drawSamplePlate = function (plate, container1, container2) {
-    var plate96Data = JSON.parse(plate96Json);
-    var plate384Data = JSON.parse(plate384Json);
+  var drawSampleSpinColumn = function (spinColumn, container) {
+    var spinColumnData = JSON.parse(spinColumnJson);
 
-    plate.setupPresenter(plate96Data, container1);
+    spinColumn.setupController(spinColumnData, container);
 
-    return plate;
+    return this;
   };
 
-
   var view = undefined;
-  var presenter = undefined;
+  var controller = undefined;
   var owner = undefined;
 
   function configureSpyView() {
@@ -49,68 +47,68 @@ define(['presenters/plate_presenter',
     spyOn(owner, 'childDone');
   }
 
-  describe("PlatePresenter", function () {
+  describe("SpinColumnController", function () {
     describe("default constructor", function () {
       beforeEach(function () {
-        presenter = new PlatePresenter();
+        controller = new SpinColumnController();
       });
-      it('instantiates plates object', function () {
-        expect(presenter).toBeDefined();
+      it('instantiates spin columns object', function () {
+        expect(controller).toBeDefined();
       });
-      it('is of type plate', function () {
-        expect(presenter instanceof PlatePresenter).toBeTruthy();
+      it('is of type spin column', function () {
+        expect(controller instanceof SpinColumnController).toBeTruthy();
       });
     });
 
     describe("UpdateModel", function () {
       beforeEach(function () {
         configureMockOwner();
-        presenter = new PlatePresenter(owner);
-        presenter.View = View;
-        spyOn(presenter, 'setupView');
-        presenter.updateModel(true);
+        controller = new SpinColumnController(owner);
+        controller.View = View;
+        spyOn(controller, 'setupView');
+        controller.updateModel(true);
 
       });
       it('Model is properly set', function () {
-        expect(presenter.model).toBe(true);
+        expect(controller.model).toBe(true);
       });
       it('Render view has been called', function () {
-        expect(presenter.setupView).toHaveBeenCalled();
+        expect(controller.setupView).toHaveBeenCalled();
       });
     });
 
     describe("Setup Placeholder", function () {
       beforeEach(function () {
-        presenter = new PlatePresenter();
-        presenter.setupPlaceholder(true);
+        controller = new SpinColumnController();
+        controller.setupPlaceholder(true);
       });
       it('View is properly set', function () {
-        expect(presenter.jquerySelection).toBeDefined();
+        expect(controller.jquerySelection).toBeDefined();
       });
     });
 
     describe("Setup View", function () {
       beforeEach(function () {
-        presenter = new PlatePresenter();
-        presenter.setupView(true);
+        controller = new SpinColumnController();
+        controller.setupView(true);
       });
       it('View is properly set', function () {
-        expect(presenter.currentView).toBeDefined();
+        expect(controller.currentView).toBeDefined();
       });
     });
 
     describe("View interaction", function () {
       beforeEach(function () {
         configureSpyView();
-        presenter = new PlatePresenter();
-        presenter.currentView = view;
+        controller = new SpinColumnController();
+        controller.currentView = view;
       });
-      it('Renders plates in the view', function () {
-        presenter.renderView();
+      it('Renders spin columns in the view', function () {
+        controller.renderView();
         expect(view.renderView).toHaveBeenCalled();
       });
       it('Releases the view as expected', function () {
-        presenter.release();
+        controller.release();
         expect(view.release).toHaveBeenCalled();
       });
     });

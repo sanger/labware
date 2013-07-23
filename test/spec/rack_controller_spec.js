@@ -1,18 +1,17 @@
-define(['presenters/spin_column_presenter',
-  'text!json_data/spin_column.json'
-], function (SpinColumnPresenter, spinColumnJson) {
+define(['controllers/rack_controller',
+  'text!json_data/tube_rack.json'], function (RackController, rackJson) {
   'use strict';
 
-  var drawSampleSpinColumn = function (spinColumn, container) {
-    var spinColumnData = JSON.parse(spinColumnJson);
+  var drawSampleRack = function (rack, container) {
+    var rackData = JSON.parse(rackJson);
 
-    spinColumn.setupPresenter(spinColumnData, container);
+    rack.setupController(rackData, container);
 
     return this;
   };
 
   var view = undefined;
-  var presenter = undefined;
+  var controller = undefined;
   var owner = undefined;
 
   function configureSpyView() {
@@ -26,6 +25,7 @@ define(['presenters/spin_column_presenter',
 
     spyOn(view, 'release');
     spyOn(view, 'renderView');
+    spyOn($, 'ajax');
   }
 
   function View() {
@@ -47,68 +47,64 @@ define(['presenters/spin_column_presenter',
     spyOn(owner, 'childDone');
   }
 
-  describe("SpinColumnPresenter", function () {
+  describe("RackController", function () {
     describe("default constructor", function () {
       beforeEach(function () {
-        presenter = new SpinColumnPresenter();
+        controller = new RackController();
       });
-      it('instantiates spin columns object', function () {
-        expect(presenter).toBeDefined();
+      it('instantiates tube racks object', function () {
+        expect(controller).toBeDefined();
       });
-      it('is of type spin column', function () {
-        expect(presenter instanceof SpinColumnPresenter).toBeTruthy();
+      it('is of type tube rack', function () {
+        expect(controller instanceof RackController).toBeTruthy();
       });
     });
 
     describe("UpdateModel", function () {
       beforeEach(function () {
         configureMockOwner();
-        presenter = new SpinColumnPresenter(owner);
-        presenter.View = View;
-        spyOn(presenter, 'setupView');
-        presenter.updateModel(true);
-
-      });
-      it('Model is properly set', function () {
-        expect(presenter.model).toBe(true);
+        controller = new RackController(owner);
+        controller.View = View;
+        spyOn(controller, 'setupView');
+        controller.updateModel(true);
       });
       it('Render view has been called', function () {
-        expect(presenter.setupView).toHaveBeenCalled();
+        expect(controller.setupView).toHaveBeenCalled();
       });
     });
 
     describe("Setup Placeholder", function () {
       beforeEach(function () {
-        presenter = new SpinColumnPresenter();
-        presenter.setupPlaceholder(true);
+        controller = new RackController();
+        controller.setupPlaceholder(true);
       });
       it('View is properly set', function () {
-        expect(presenter.jquerySelection).toBeDefined();
+        expect(controller.jquerySelection).toBeDefined();
       });
     });
 
     describe("Setup View", function () {
       beforeEach(function () {
-        presenter = new SpinColumnPresenter();
-        presenter.setupView(true);
+        controller = new RackController();
+        controller.setupView(true);
       });
       it('View is properly set', function () {
-        expect(presenter.currentView).toBeDefined();
+        expect(controller.currentView).toBeDefined();
       });
     });
 
     describe("View interaction", function () {
       beforeEach(function () {
         configureSpyView();
-        presenter = new SpinColumnPresenter();
-        presenter.currentView = view;
+        controller = new RackController();
+        controller.currentView = view;
       });
-      it('Renders spin columns in the view', function () {
-        presenter.renderView();
+      it('Renders tube racks in the view', function () {
+        controller.renderView();
         expect(view.renderView).toHaveBeenCalled();
       });
       it('Releases the view as expected', function () {
-        presenter.release();
+        controller.release();
         expect(view.release).toHaveBeenCalled();
       });
     });
