@@ -1,19 +1,19 @@
 define([], function () {
   'use strict';
 
-  var basePresenter = function () {
+  var baseController = function () {
     this.currentView = undefined;
     this.model = undefined;
     this.owner = undefined;
   };
 
-  basePresenter.prototype.init = function (owner, view, labwareType) {
+  baseController.prototype.init = function (owner, view, labwareType) {
     this.View = view;
     this.labwareType = labwareType;
     this.owner = owner;
   };
 
-  /* Initialises the presenter and defines the view to be used
+  /* Initialises the controller and defines the view to be used
    *
    *
    * Arguments
@@ -25,19 +25,19 @@ define([], function () {
    * -------
    * this
    */
-  basePresenter.prototype.setupView = function () {
+  baseController.prototype.setupView = function () {
     this.currentView = new this.View(this, this.jquerySelection);
     this.currentView.model = this.model;
 
     return this;
   };
 
-  /* Sets up the presenter
+  /* Sets up the controller
    *
    *
    * Arguments
    * ---------
-   * inputModel:      The model for the presenter
+   * inputModel:      The model for the controller
    *
    * jquerySelection: The jQuery selection for the view
    *
@@ -46,26 +46,26 @@ define([], function () {
    * -------
    * this
    */
-  basePresenter.prototype.setupPresenter = function (inputModel, jquerySelection) {
+  baseController.prototype.setupController = function (inputModel, jquerySelection) {
     this.setupPlaceholder(jquerySelection);
     this.updateModel(inputModel);
 
     return this;
   };
 
-  /* Updates the model to be used with the presenter
+  /* Updates the model to be used with the controller
    *
    *
    * Arguments
    * ---------
-   * inputModel:    The model for the presenter
+   * inputModel:    The model for the controller
    *
    *
    * Returns
    * -------
    * this
    */
-  basePresenter.prototype.updateModel = function (inputModel) {
+  baseController.prototype.updateModel = function (inputModel) {
     this.model = inputModel;
     this.setupView();
     this.owner.childDone(this, this.labwareType + ' rendered', inputModel);
@@ -73,19 +73,19 @@ define([], function () {
     return this;
   };
 
-  /* Sets up the placeholder to be used with the presenter
+  /* Sets up the placeholder to be used with the controller
    *
    *
    * Arguments
    * ---------
-   * jquerySelection:    The selection for the presenter
+   * jquerySelection:    The selection for the controller
    *
    *
    * Returns
    * -------
    * this
    */
-  basePresenter.prototype.setupPlaceholder = function (jquerySelection) {
+  baseController.prototype.setupPlaceholder = function (jquerySelection) {
     this.jquerySelection = jquerySelection;
 
     return this;
@@ -103,7 +103,7 @@ define([], function () {
    * -------
    * this
    */
-  basePresenter.prototype.renderView = function () {
+  baseController.prototype.renderView = function () {
     // Pass the update call down to the view
     this.currentView.renderView();
 
@@ -122,7 +122,7 @@ define([], function () {
    * -------
    * this
    */
-  basePresenter.prototype.release = function () {
+  baseController.prototype.release = function () {
     this.currentView.release();
 
     return this;
@@ -139,9 +139,9 @@ define([], function () {
    * -------
    * this
    */
-  basePresenter.prototype.childDone = function (childPtr, action, data) {
+  baseController.prototype.childDone = function (childPtr, action, data) {
     return this;
   };
 
-  return basePresenter;
+  return baseController;
 });

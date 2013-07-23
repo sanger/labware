@@ -1,27 +1,27 @@
 define([
        'labware/views/rack_view',
-       'labware/presenters/base_presenter'
-], function (View,  BasePresenter) {
+       'labware/controllers/base_controller'
+], function (View,  BaseController) {
   'use strict';
 
-  var RackPresenter = function (owner, presenterFactory) {
+  var RackController = function (owner, controllerFactory) {
     var labType = "rack";
-    BasePresenter.call(this);
-    this.presenterFactory = presenterFactory;
+    BaseController.call(this);
+    this.controllerFactory = controllerFactory;
     this.init(owner, View, labType);
 
     return this;
   };
 
-  RackPresenter.prototype = new BasePresenter();
+  RackController.prototype = new BaseController();
 
-  RackPresenter.prototype.fillWell = function (well, colour){
+  RackController.prototype.fillWell = function (well, colour){
     this.currentView.fillWell(well,colour);
   };
 
-  RackPresenter.prototype.resetWells = function (){
+  RackController.prototype.resetWells = function (){
     this.currentView.resetWells();
   };
 
-  return RackPresenter;
+  return RackController;
 });

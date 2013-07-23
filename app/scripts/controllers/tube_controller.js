@@ -1,19 +1,19 @@
 define(['labware/views/tube_view',
-    'labware/presenters/base_presenter'],
-    function(View, BasePresenter) {
+    'labware/controllers/base_controller'],
+    function(View, BaseController) {
     'use strict';
 
-    var tubePresenter = function (owner, presenterFactory) {
+    var tubeController = function (owner, controllerFactory) {
         var labType = "tube";
-        BasePresenter.call(this);
-        this.presenterFactory = presenterFactory;
+        BaseController.call(this);
+        this.controllerFactory = controllerFactory;
         this.init(owner, View, labType);
 
         return this;
     };
 
-    tubePresenter.prototype = new BasePresenter();
+    tubeController.prototype = new BaseController();
 
 
-    return tubePresenter;
+    return tubeController;
 });

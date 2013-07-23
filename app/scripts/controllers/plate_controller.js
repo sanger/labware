@@ -1,18 +1,18 @@
 define(['labware/views/plate_view',
-    'labware/presenters/base_presenter'],
-    function(View, BasePresenter) {
+    'labware/controllers/base_controller'],
+    function(View, BaseController) {
     'use strict';
 
-    var platePresenter = function (owner, presenterFactory) {
+    var plateController = function (owner, controllerFactory) {
         var labType = "plate";
-        BasePresenter.call(this);
-        this.presenterFactory = presenterFactory;
+        BaseController.call(this);
+        this.controllerFactory = controllerFactory;
         this.init(owner, View, labType);
 
         return this;
     };
 
-    platePresenter.prototype = new BasePresenter();
+    plateController.prototype = new BaseController();
 
-    return platePresenter;
+    return plateController;
 });

@@ -1,18 +1,18 @@
 define(['labware/views/spin_column_view',
-    'labware/presenters/base_presenter'],
-    function(View, BasePresenter) {
+    'labware/controllers/base_controller'],
+    function(View, BaseController) {
     'use strict';
 
-    var spinColumnPresenter = function (owner, presenterFactory) {
+    var spinColumnController = function (owner, controllerFactory) {
         var labType = "spinColumn";
-        BasePresenter.call(this);
-        this.presenterFactory = presenterFactory;
+        BaseController.call(this);
+        this.controllerFactory = controllerFactory;
         this.init(owner, View, labType);
 
         return this;
     };
 
-    spinColumnPresenter.prototype = new BasePresenter();
+    spinColumnController.prototype = new BaseController();
 
-    return spinColumnPresenter;
+    return spinColumnController;
 });

@@ -1,20 +1,20 @@
 define(['labware/views/waste_tube_view',
-  'labware/presenters/base_presenter'],
-  function (View, BasePresenter) {
+  'labware/controllers/base_controller'],
+  function (View, BaseController) {
     'use strict';
 
-    var tubePresenter = function (owner, presenterFactory) {
+    var tubeController = function (owner, controllerFactory) {
       var labType = "wasteTube";
-      BasePresenter.call(this);
-      this.presenterFactory = presenterFactory;
+      BaseController.call(this);
+      this.controllerFactory = controllerFactory;
       this.init(owner, View, labType);
 
       return this;
     };
 
-    tubePresenter.prototype = new BasePresenter();
+    tubeController.prototype = new BaseController();
 
-    /* Sets up the presenter
+    /* Sets up the controller
      *
      *
      * Arguments
@@ -26,7 +26,7 @@ define(['labware/views/waste_tube_view',
      * -------
      * this
      */
-    tubePresenter.prototype.setupPresenter = function (inputModel, jquerySelection) {
+    tubeController.prototype.setupController = function (inputModel, jquerySelection) {
       this.setupPlaceholder(jquerySelection);
       this.setupView();
       this.renderView();
@@ -34,7 +34,7 @@ define(['labware/views/waste_tube_view',
       return this;
     };
 
-    tubePresenter.prototype.getAliquotType = function () {
+    tubeController.prototype.getAliquotType = function () {
       var type = '';
 
       if (this.model && this.model.hasOwnProperty('tube')) {
@@ -46,5 +46,5 @@ define(['labware/views/waste_tube_view',
       return type;
     }
 
-    return tubePresenter;
+    return tubeController;
   });

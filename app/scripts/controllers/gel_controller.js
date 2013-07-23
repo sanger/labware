@@ -1,18 +1,18 @@
 define(['labware/views/gel_view',
-    'labware/presenters/base_presenter'],
-    function (View, BasePresenter) {
+    'labware/controllers/base_controller'],
+    function (View, BaseController) {
     'use strict';
 
-    var gelPresenter = function (owner, presenterFactory) {
+    var gelController = function (owner, controllerFactory) {
         var labType = "gel";
-        BasePresenter.call(this);
-        this.presenterFactory = presenterFactory;
+        BaseController.call(this);
+        this.controllerFactory = controllerFactory;
         this.init(owner, View, labType);
 
         return this;
     };
 
-    gelPresenter.prototype = new BasePresenter();
+    gelController.prototype = new BaseController();
 
-    return gelPresenter;
+    return gelController;
 });
