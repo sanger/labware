@@ -1,17 +1,17 @@
-define(['presenters/rack_presenter',
-  'text!json_data/tube_rack.json'], function (RackPresenter, rackJson) {
+define(['controllers/rack_controller',
+  'text!json_data/tube_rack.json'], function (RackController, rackJson) {
   'use strict';
 
   var drawSampleRack = function (rack, container) {
     var rackData = JSON.parse(rackJson);
 
-    rack.setupPresenter(rackData, container);
+    rack.setupController(rackData, container);
 
     return this;
   };
 
   var view = undefined;
-  var presenter = undefined;
+  var controller = undefined;
   var owner = undefined;
 
   function configureSpyView() {
@@ -47,64 +47,64 @@ define(['presenters/rack_presenter',
     spyOn(owner, 'childDone');
   }
 
-  describe("RackPresenter", function () {
+  describe("RackController", function () {
     describe("default constructor", function () {
       beforeEach(function () {
-        presenter = new RackPresenter();
+        controller = new RackController();
       });
       it('instantiates tube racks object', function () {
-        expect(presenter).toBeDefined();
+        expect(controller).toBeDefined();
       });
       it('is of type tube rack', function () {
-        expect(presenter instanceof RackPresenter).toBeTruthy();
+        expect(controller instanceof RackController).toBeTruthy();
       });
     });
 
     describe("UpdateModel", function () {
       beforeEach(function () {
         configureMockOwner();
-        presenter = new RackPresenter(owner);
-        presenter.View = View;
-        spyOn(presenter, 'setupView');
-        presenter.updateModel(true);
+        controller = new RackController(owner);
+        controller.View = View;
+        spyOn(controller, 'setupView');
+        controller.updateModel(true);
       });
       it('Render view has been called', function () {
-        expect(presenter.setupView).toHaveBeenCalled();
+        expect(controller.setupView).toHaveBeenCalled();
       });
     });
 
     describe("Setup Placeholder", function () {
       beforeEach(function () {
-        presenter = new RackPresenter();
-        presenter.setupPlaceholder(true);
+        controller = new RackController();
+        controller.setupPlaceholder(true);
       });
       it('View is properly set', function () {
-        expect(presenter.jquerySelection).toBeDefined();
+        expect(controller.jquerySelection).toBeDefined();
       });
     });
 
     describe("Setup View", function () {
       beforeEach(function () {
-        presenter = new RackPresenter();
-        presenter.setupView(true);
+        controller = new RackController();
+        controller.setupView(true);
       });
       it('View is properly set', function () {
-        expect(presenter.currentView).toBeDefined();
+        expect(controller.currentView).toBeDefined();
       });
     });
 
     describe("View interaction", function () {
       beforeEach(function () {
         configureSpyView();
-        presenter = new RackPresenter();
-        presenter.currentView = view;
+        controller = new RackController();
+        controller.currentView = view;
       });
       it('Renders tube racks in the view', function () {
-        presenter.renderView();
+        controller.renderView();
         expect(view.renderView).toHaveBeenCalled();
       });
       it('Releases the view as expected', function () {
-        presenter.release();
+        controller.release();
         expect(view.release).toHaveBeenCalled();
       });
     });

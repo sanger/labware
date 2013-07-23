@@ -6,7 +6,7 @@ require.config({
   paths: {
     domReady: 'components/requirejs-domready/domReady',
     views: 'scripts/views',
-    presenters: 'scripts/presenters',
+    controllers: 'scripts/controllers',
     images: 'images',
     config: 'test_config',
     text: 'components/requirejs-text/text',
@@ -18,13 +18,13 @@ require.config({
 });
 
 require(['domReady!',
-    'spec/tube_presenter_spec',
-    'spec/plate_presenter_spec',
-    'spec/spin_column_presenter_spec',
-    'spec/qia_cube_presenter_spec',
-    'spec/rack_presenter_spec',
-    'spec/centrifuge_presenter_spec',
-    'spec/gel_presenter_spec'],
+    'spec/tube_controller_spec',
+    'spec/plate_controller_spec',
+    'spec/spin_column_controller_spec',
+    'spec/qia_cube_controller_spec',
+    'spec/rack_controller_spec',
+    'spec/centrifuge_controller_spec',
+    'spec/gel_controller_spec'],
     function() {
   runJasmineTests();
   //window.setTimeout(runJasmineTests, 1000);

@@ -1,20 +1,20 @@
-define(['presenters/plate_presenter',
+define(['controllers/plate_controller',
   'text!json_data/plate96_2.json',
-  'text!json_data/plate384_1.json'], function (PlatePresenter, plate96Json, plate384Json) {
+  'text!json_data/plate384_1.json'], function (PlateController, plate96Json, plate384Json) {
   'use strict';
 
   var drawSamplePlate = function (plate, container1, container2) {
     var plate96Data = JSON.parse(plate96Json);
     var plate384Data = JSON.parse(plate384Json);
 
-    plate.setupPresenter(plate96Data, container1);
+    plate.setupController(plate96Data, container1);
 
     return plate;
   };
 
 
   var view = undefined;
-  var presenter = undefined;
+  var controller = undefined;
   var owner = undefined;
 
   function configureSpyView() {
@@ -49,68 +49,68 @@ define(['presenters/plate_presenter',
     spyOn(owner, 'childDone');
   }
 
-  describe("PlatePresenter", function () {
+  describe("PlateController", function () {
     describe("default constructor", function () {
       beforeEach(function () {
-        presenter = new PlatePresenter();
+        controller = new PlateController();
       });
       it('instantiates plates object', function () {
-        expect(presenter).toBeDefined();
+        expect(controller).toBeDefined();
       });
       it('is of type plate', function () {
-        expect(presenter instanceof PlatePresenter).toBeTruthy();
+        expect(controller instanceof PlateController).toBeTruthy();
       });
     });
 
     describe("UpdateModel", function () {
       beforeEach(function () {
         configureMockOwner();
-        presenter = new PlatePresenter(owner);
-        presenter.View = View;
-        spyOn(presenter, 'setupView');
-        presenter.updateModel(true);
+        controller = new PlateController(owner);
+        controller.View = View;
+        spyOn(controller, 'setupView');
+        controller.updateModel(true);
 
       });
       it('Model is properly set', function () {
-        expect(presenter.model).toBe(true);
+        expect(controller.model).toBe(true);
       });
       it('Render view has been called', function () {
-        expect(presenter.setupView).toHaveBeenCalled();
+        expect(controller.setupView).toHaveBeenCalled();
       });
     });
 
     describe("Setup Placeholder", function () {
       beforeEach(function () {
-        presenter = new PlatePresenter();
-        presenter.setupPlaceholder(true);
+        controller = new PlateController();
+        controller.setupPlaceholder(true);
       });
       it('View is properly set', function () {
-        expect(presenter.jquerySelection).toBeDefined();
+        expect(controller.jquerySelection).toBeDefined();
       });
     });
 
     describe("Setup View", function () {
       beforeEach(function () {
-        presenter = new PlatePresenter();
-        presenter.setupView(true);
+        controller = new PlateController();
+        controller.setupView(true);
       });
       it('View is properly set', function () {
-        expect(presenter.currentView).toBeDefined();
+        expect(controller.currentView).toBeDefined();
       });
     });
 
     describe("View interaction", function () {
       beforeEach(function () {
         configureSpyView();
-        presenter = new PlatePresenter();
-        presenter.currentView = view;
+        controller = new PlateController();
+        controller.currentView = view;
       });
       it('Renders plates in the view', function () {
-        presenter.renderView();
+        controller.renderView();
         expect(view.renderView).toHaveBeenCalled();
       });
       it('Releases the view as expected', function () {
-        presenter.release();
+        controller.release();
         expect(view.release).toHaveBeenCalled();
       });
     });

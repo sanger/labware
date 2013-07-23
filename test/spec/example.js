@@ -1,41 +1,41 @@
-define(['presenters/tube_presenter', 'presenters/plate_presenter', 'presenters/rack_presenter', 'presenters/spin_column_presenter'], function(TubePresenter, Plate96Presenter, RackPresenter, SpinColumnPresenter) {
+define(['controllers/tube_controller', 'controllers/plate_controller', 'controllers/rack_controller', 'controllers/spin_column_controller'], function(TubeController, Plate96Controller, RackController, SpinColumnController) {
   'use strict';
 
-   describe("TubePresenter", function() {
+   describe("TubeController", function() {
       describe("default constructor", function(){
          it('instantiates tubes object', function(){
-           var presenter = new TubePresenter();
-           expect(presenter).toBeDefined();
+           var controller = new TubeController();
+           expect(controller).toBeDefined();
           });
           it('is of type tube', function(){
-              var presenter = new TubePresenter();
-              expect(presenter instanceof TubePresenter).toBeTruthy();
+              var controller = new TubeController();
+              expect(controller instanceof TubeController).toBeTruthy();
           });
       });
   });
 
-  describe("Plate96Presenter", function(){
+  describe("Plate96Controller", function(){
     describe("default constructor", function(){
       it('instantiates plate object', function(){
-        var plate96 = new Plate96Presenter();
+        var plate96 = new Plate96Controller();
         expect(plate96).toBeDefined();
       });
     });
   });
 
-  describe("RackPresenter", function(){
+  describe("RackController", function(){
     describe("default constructor", function(){
       it('instantiates rack object', function(){
-        var rack = new RackPresenter();
+        var rack = new RackController();
         expect(rack).toBeDefined();
       });
     });
   });
 
-  describe("SpinColumnPresenter", function(){
+  describe("SpinColumnController", function(){
     describe("default constructor", function(){
       it('instantiates spin column object', function(){
-        var SpinColumn = new SpinColumnPresenter();
+        var SpinColumn = new SpinColumnController();
         expect(SpinColumn).toBeDefined();
       });
     });

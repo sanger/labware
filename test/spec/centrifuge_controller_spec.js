@@ -1,8 +1,8 @@
-define(['presenters/centrifuge_presenter'], function (CentrifugePresenter) {
+define(['controllers/centrifuge_controller'], function (CentrifugeController) {
   'use strict';
 
   var view = undefined;
-  var presenter = undefined;
+  var controller = undefined;
   var owner = undefined;
 
   function configureSpyView() {
@@ -41,68 +41,68 @@ define(['presenters/centrifuge_presenter'], function (CentrifugePresenter) {
     spyOn(owner, 'childDone');
   }
 
-  describe("CentrifugePresenter", function () {
+  describe("CentrifugeController", function () {
     describe("default constructor", function () {
       beforeEach(function () {
-        presenter = new CentrifugePresenter();
+        controller = new CentrifugeController();
       });
       it('instantiates centrifuges object', function () {
-        expect(presenter).toBeDefined();
+        expect(controller).toBeDefined();
       });
       it('is of type centrifuge', function () {
-        expect(presenter instanceof CentrifugePresenter).toBeTruthy();
+        expect(controller instanceof CentrifugeController).toBeTruthy();
       });
     });
 
     describe("UpdateModel", function () {
       beforeEach(function () {
         configureMockOwner();
-        presenter = new CentrifugePresenter(owner);
-        presenter.View = View;
-        spyOn(presenter, 'setupView');
-        presenter.updateModel(true);
+        controller = new CentrifugeController(owner);
+        controller.View = View;
+        spyOn(controller, 'setupView');
+        controller.updateModel(true);
 
       });
       it('Model is properly set', function () {
-        expect(presenter.model).toBe(true);
+        expect(controller.model).toBe(true);
       });
       it('Render view has been called', function () {
-        expect(presenter.setupView).toHaveBeenCalled();
+        expect(controller.setupView).toHaveBeenCalled();
       });
     });
 
     describe("Setup Placeholder", function () {
       beforeEach(function () {
-        presenter = new CentrifugePresenter();
-        presenter.setupPlaceholder(true);
+        controller = new CentrifugeController();
+        controller.setupPlaceholder(true);
       });
       it('View is properly set', function () {
-        expect(presenter.jquerySelection).toBeDefined();
+        expect(controller.jquerySelection).toBeDefined();
       });
     });
 
     describe("Setup View", function () {
       beforeEach(function () {
-        presenter = new CentrifugePresenter();
-        presenter.setupView(true);
+        controller = new CentrifugeController();
+        controller.setupView(true);
       });
       it('View is properly set', function () {
-        expect(presenter.currentView).toBeDefined();
+        expect(controller.currentView).toBeDefined();
       });
     });
 
     describe("View interaction", function () {
       beforeEach(function () {
         configureSpyView();
-        presenter = new CentrifugePresenter();
-        presenter.currentView = view;
+        controller = new CentrifugeController();
+        controller.currentView = view;
       });
       it('Renders centrifuges in the view', function () {
-        presenter.renderView();
+        controller.renderView();
         expect(view.renderView).toHaveBeenCalled();
       });
       it('Releases the view as expected', function () {
-        presenter.release();
+        controller.release();
         expect(view.release).toHaveBeenCalled();
       });
     });

@@ -1,18 +1,18 @@
-define(['presenters/spin_column_presenter',
+define(['controllers/spin_column_controller',
   'text!json_data/spin_column.json'
-], function (SpinColumnPresenter, spinColumnJson) {
+], function (SpinColumnController, spinColumnJson) {
   'use strict';
 
   var drawSampleSpinColumn = function (spinColumn, container) {
     var spinColumnData = JSON.parse(spinColumnJson);
 
-    spinColumn.setupPresenter(spinColumnData, container);
+    spinColumn.setupController(spinColumnData, container);
 
     return this;
   };
 
   var view = undefined;
-  var presenter = undefined;
+  var controller = undefined;
   var owner = undefined;
 
   function configureSpyView() {
@@ -47,68 +47,68 @@ define(['presenters/spin_column_presenter',
     spyOn(owner, 'childDone');
   }
 
-  describe("SpinColumnPresenter", function () {
+  describe("SpinColumnController", function () {
     describe("default constructor", function () {
       beforeEach(function () {
-        presenter = new SpinColumnPresenter();
+        controller = new SpinColumnController();
       });
       it('instantiates spin columns object', function () {
-        expect(presenter).toBeDefined();
+        expect(controller).toBeDefined();
       });
       it('is of type spin column', function () {
-        expect(presenter instanceof SpinColumnPresenter).toBeTruthy();
+        expect(controller instanceof SpinColumnController).toBeTruthy();
       });
     });
 
     describe("UpdateModel", function () {
       beforeEach(function () {
         configureMockOwner();
-        presenter = new SpinColumnPresenter(owner);
-        presenter.View = View;
-        spyOn(presenter, 'setupView');
-        presenter.updateModel(true);
+        controller = new SpinColumnController(owner);
+        controller.View = View;
+        spyOn(controller, 'setupView');
+        controller.updateModel(true);
 
       });
       it('Model is properly set', function () {
-        expect(presenter.model).toBe(true);
+        expect(controller.model).toBe(true);
       });
       it('Render view has been called', function () {
-        expect(presenter.setupView).toHaveBeenCalled();
+        expect(controller.setupView).toHaveBeenCalled();
       });
     });
 
     describe("Setup Placeholder", function () {
       beforeEach(function () {
-        presenter = new SpinColumnPresenter();
-        presenter.setupPlaceholder(true);
+        controller = new SpinColumnController();
+        controller.setupPlaceholder(true);
       });
       it('View is properly set', function () {
-        expect(presenter.jquerySelection).toBeDefined();
+        expect(controller.jquerySelection).toBeDefined();
       });
     });
 
     describe("Setup View", function () {
       beforeEach(function () {
-        presenter = new SpinColumnPresenter();
-        presenter.setupView(true);
+        controller = new SpinColumnController();
+        controller.setupView(true);
       });
       it('View is properly set', function () {
-        expect(presenter.currentView).toBeDefined();
+        expect(controller.currentView).toBeDefined();
       });
     });
 
     describe("View interaction", function () {
       beforeEach(function () {
         configureSpyView();
-        presenter = new SpinColumnPresenter();
-        presenter.currentView = view;
+        controller = new SpinColumnController();
+        controller.currentView = view;
       });
       it('Renders spin columns in the view', function () {
-        presenter.renderView();
+        controller.renderView();
         expect(view.renderView).toHaveBeenCalled();
       });
       it('Releases the view as expected', function () {
-        presenter.release();
+        controller.release();
         expect(view.release).toHaveBeenCalled();
       });
     });

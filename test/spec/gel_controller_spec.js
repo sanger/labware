@@ -1,18 +1,18 @@
-define(['presenters/gel_presenter',
-  'text!json_data/gel_plate.json'], function (GelPresenter, gelJson) {
+define(['controllers/gel_controller',
+  'text!json_data/gel_plate.json'], function (GelController, gelJson) {
   'use strict';
 
   var drawSampleGel = function (gelPlate, container) {
     var gelData = JSON.parse(gelJson);
 
-    gelPlate.setupPresenter(gelData, container);
+    gelPlate.setupController(gelData, container);
 
     return this;
   };
 
 
   var view = undefined;
-  var presenter = undefined;
+  var controller = undefined;
   var owner = undefined;
 
   function configureSpyView() {
@@ -47,68 +47,68 @@ define(['presenters/gel_presenter',
     spyOn(owner, 'childDone');
   }
 
-  describe("GelPresenter", function () {
+  describe("GelController", function () {
     describe("default constructor", function () {
       beforeEach(function () {
-        presenter = new GelPresenter();
+        controller = new GelController();
       });
       it('instantiates gels object', function () {
-        expect(presenter).toBeDefined();
+        expect(controller).toBeDefined();
       });
       it('is of type gel', function () {
-        expect(presenter instanceof GelPresenter).toBeTruthy();
+        expect(controller instanceof GelController).toBeTruthy();
       });
     });
 
     describe("UpdateModel", function () {
       beforeEach(function () {
         configureMockOwner();
-        presenter = new GelPresenter(owner);
-        presenter.View = View;
-        spyOn(presenter, 'setupView');
-        presenter.updateModel(true);
+        controller = new GelController(owner);
+        controller.View = View;
+        spyOn(controller, 'setupView');
+        controller.updateModel(true);
 
       });
       it('Model is properly set', function () {
-        expect(presenter.model).toBe(true);
+        expect(controller.model).toBe(true);
       });
       it('Render view has been called', function () {
-        expect(presenter.setupView).toHaveBeenCalled();
+        expect(controller.setupView).toHaveBeenCalled();
       });
     });
 
     describe("Setup Placeholder", function () {
       beforeEach(function () {
-        presenter = new GelPresenter();
-        presenter.setupPlaceholder(true);
+        controller = new GelController();
+        controller.setupPlaceholder(true);
       });
       it('View is properly set', function () {
-        expect(presenter.jquerySelection).toBeDefined();
+        expect(controller.jquerySelection).toBeDefined();
       });
     });
 
     describe("Setup View", function () {
       beforeEach(function () {
-        presenter = new GelPresenter();
-        presenter.setupView(true);
+        controller = new GelController();
+        controller.setupView(true);
       });
       it('View is properly set', function () {
-        expect(presenter.currentView).toBeDefined();
+        expect(controller.currentView).toBeDefined();
       });
     });
 
     describe("View interaction", function () {
       beforeEach(function () {
         configureSpyView();
-        presenter = new GelPresenter();
-        presenter.currentView = view;
+        controller = new GelController();
+        controller.currentView = view;
       });
       it('Renders gels in the view', function () {
-        presenter.renderView();
+        controller.renderView();
         expect(view.renderView).toHaveBeenCalled();
       });
       it('Releases the view as expected', function () {
-        presenter.release();
+        controller.release();
         expect(view.release).toHaveBeenCalled();
       });
     });
